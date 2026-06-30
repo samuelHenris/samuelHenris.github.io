@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel Henry A. | Data & Automation, IT & Security Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e13;
+    --surface:#11161d;
+    --surface-2:#161d26;
+    --line:#232b36;
+    --text:#e7edf3;
+    --muted:#8694a3;
+    --teal:#56e6c9;
+    --amber:#f0a64d;
+    --teal-dim:rgba(86,230,201,0.12);
+    --amber-dim:rgba(240,166,77,0.12);
+    --mono:'IBM Plex Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--teal-dim);color:var(--teal);}
+
+  /* scanline texture */
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+    z-index:1;
+  }
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;
+    z-index:50;
+    background:rgba(10,14,19,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{font-family:var(--mono);font-weight:600;font-size:14px;color:var(--teal);display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);animation:pulse 2.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .navlinks{display:flex;gap:28px;font-family:var(--mono);font-size:12.5px;color:var(--muted);}
+  .navlinks a{transition:color .2s;}
+  .navlinks a:hover{color:var(--teal);}
+  .navlinks span{color:var(--line);}
+  @media (max-width:700px){.navlinks{display:none;}}
+
+  /* HERO */
+  header.hero{
+    position:relative;
+    padding:160px 0 90px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .scan-sweep{
+    position:absolute;top:0;left:-50%;width:50%;height:100%;
+    background:linear-gradient(90deg, transparent, rgba(86,230,201,0.05), transparent);
+    animation:sweep 7s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes sweep{0%{left:-50%;}100%{left:100%;}}
+  .eyebrow{
+    font-family:var(--mono);font-size:12.5px;color:var(--amber);
+    letter-spacing:0.08em;
+    display:flex;align-items:center;gap:10px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:18px;height:1px;background:var(--amber);}
+  h1{
+    font-family:var(--mono);
+    font-size:clamp(34px,6vw,58px);
+    font-weight:700;
+    line-height:1.12;
+    letter-spacing:-0.01em;
+    max-width:760px;
+  }
+  h1 .accent{color:var(--teal);}
+  .hero-sub{
+    margin-top:22px;
+    font-size:17px;
+    color:var(--muted);
+    max-width:560px;
+  }
+  .hero-meta{
+    margin-top:34px;
+    display:flex;flex-wrap:wrap;gap:14px;
+  }
+  .chip{
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    border:1px solid var(--line);padding:7px 13px;border-radius:4px;
+    background:var(--surface);
+  }
+  .cta-row{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    padding:13px 22px;border-radius:4px;
+    border:1px solid var(--teal);color:var(--bg);
+    background:var(--teal);
+    transition:all .2s;
+    cursor:pointer;
+  }
+  .btn:hover{background:transparent;color:var(--teal);}
+  .btn.ghost{background:transparent;color:var(--text);border-color:var(--line);}
+  .btn.ghost:hover{border-color:var(--amber);color:var(--amber);}
+
+  /* TERMINAL */
+  .terminal{
+    margin-top:46px;
+    max-width:600px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:7px;
+    padding:10px 14px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+  }
+  .term-dot{width:10px;height:10px;border-radius:50%;}
+  .term-title{
+    margin-left:auto;margin-right:auto;
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    transform:translateX(-7px);
+  }
+  .term-body{
+    padding:16px;
+    height:180px;
+    overflow-y:auto;
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--text);
+  }
+  .term-body::-webkit-scrollbar{width:6px;}
+  .term-body::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .term-line{margin-bottom:8px;white-space:pre-wrap;line-height:1.55;}
+  .term-line.cmd{color:var(--teal);}
+  .term-line.cmd::before{content:'$ ';color:var(--muted);}
+  .term-hl{color:var(--amber);}
+  .term-input-row{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;
+    border-top:1px solid var(--line);
+  }
+  .term-prompt{font-family:var(--mono);color:var(--teal);font-size:13px;}
+  .term-input{
+    flex:1;background:transparent;border:none;outline:none;
+    font-family:var(--mono);font-size:13px;color:var(--text);
+    caret-color:var(--teal);
+  }
+  .term-input::placeholder{color:var(--muted);}
+
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ROADMAP */
+  .road-hint{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:-20px;margin-bottom:36px;}
+  .roadmap{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0 0;
+    margin-bottom:8px;
+  }
+  .road-track{
+    position:absolute;
+    top:7px;left:0;right:0;
+    height:2px;
+    background:var(--line);
+    z-index:0;
+  }
+  .road-node{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;align-items:center;
+    cursor:pointer;
+    flex:1;
+    padding:0 4px;
+  }
+  .node-dot{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--surface);
+    border:2px solid var(--line);
+    transition:all .25s ease;
+    margin-bottom:14px;
+  }
+  .road-node:hover .node-dot{border-color:var(--teal);transform:scale(1.15);}
+  .road-node.active .node-dot{
+    background:var(--teal);border-color:var(--teal);
+    box-shadow:0 0 0 5px var(--teal-dim);
+  }
+  .node-year{font-family:var(--mono);font-size:11px;color:var(--amber);margin-bottom:5px;}
+  .node-label{font-size:12px;color:var(--muted);text-align:center;line-height:1.3;transition:color .2s;}
+  .road-node.active .node-label{color:var(--text);}
+  @media (max-width:700px){
+    .roadmap{flex-direction:column;align-items:flex-start;gap:26px;padding-left:18px;}
+    .road-track{top:0;bottom:0;left:7px;right:auto;width:2px;height:auto;}
+    .road-node{flex-direction:row;align-items:center;gap:14px;}
+    .node-dot{margin-bottom:0;}
+    .node-year, .node-label{text-align:left;}
+  }
+  .road-detail{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    min-height:96px;
+    margin-top:34px;
+    transition:border-color .2s;
+  }
+  .road-detail.lit{border-color:var(--teal);}
+  .road-detail-inner{padding:22px 26px;}
+  .rd-tag{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.05em;display:block;margin-bottom:8px;}
+  .road-detail p{color:var(--muted);font-size:14px;}
+
+  /* SECTION shared */
+  section{padding:80px 0;border-bottom:1px solid var(--line);position:relative;z-index:2;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:42px;}
+  .sec-num{font-family:var(--mono);color:var(--amber);font-size:13px;}
+  .sec-title{font-family:var(--mono);font-size:22px;font-weight:600;}
+  .sec-line{flex:1;height:1px;background:var(--line);}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;}
+  @media (max-width:700px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{color:var(--muted);margin-bottom:16px;font-size:15.5px;}
+  .about-text strong{color:var(--text);font-weight:600;}
+  .skills-panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px;
+  }
+  .skills-panel h4{font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:0.05em;margin-bottom:16px;}
+  .skill-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .filter-pill{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    background:transparent;border:1px solid var(--line);border-radius:14px;
+    padding:5px 11px;cursor:pointer;transition:all .2s;
+  }
+  .filter-pill:hover{border-color:var(--teal);color:var(--teal);}
+  .filter-pill.active{background:var(--teal-dim);border-color:var(--teal);color:var(--teal);}
+  .skill-cloud{display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-pill{
+    font-family:var(--mono);font-size:11.5px;color:var(--text);
+    border:1px solid var(--line);border-radius:4px;padding:6px 10px;
+    transition:all .25s ease;
+  }
+  .skill-pill.dim{opacity:0.18;filter:grayscale(1);}
+  .skill-pill.hl{border-color:var(--amber);color:var(--amber);}
+
+  /* EXPERIENCE */
+  .timeline{display:flex;flex-direction:column;}
+  .tl-item{
+    display:grid;grid-template-columns:120px 1fr;gap:24px;
+    padding:26px 0;border-top:1px solid var(--line);
+  }
+  .tl-item:first-child{border-top:none;}
+  .tl-date{font-family:var(--mono);font-size:12px;color:var(--amber);padding-top:3px;}
+  .tl-role{font-size:16px;font-weight:600;margin-bottom:4px;}
+  .tl-org{font-family:var(--mono);font-size:12.5px;color:var(--teal);margin-bottom:10px;}
+  .tl-desc{color:var(--muted);font-size:14.5px;}
+  .tl-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .tag{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:3px;}
+  @media (max-width:600px){.tl-item{grid-template-columns:1fr;gap:6px;}}
+
+  /* PROJECTS */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:700px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    padding:26px;transition:border-color .2s, transform .2s;
+  }
+  .proj-card:hover{border-color:var(--teal);transform:translateY(-2px);}
+  .proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+  .proj-name{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--teal);}
+  .proj-link{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:3px;}
+  .proj-link:hover{color:var(--amber);border-color:var(--amber);}
+  .proj-desc{color:var(--muted);font-size:14px;margin-bottom:14px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:7px;}
+
+  /* CERTS */
+  .cert-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .cert-row{
+    background:var(--surface);
+    display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;
+    padding:16px 20px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cert-row::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--teal);
+    transform:scaleY(0);transform-origin:top;
+    transition:transform .5s ease;
+  }
+  .cert-row.scanned::before{transform:scaleY(1);}
+  .cert-name{font-size:14.5px;font-weight:600;}
+  .cert-id{font-family:var(--mono);font-size:11.5px;color:var(--muted);}
+  .cert-valid{font-family:var(--mono);font-size:11.5px;color:var(--teal);}
+  @media (max-width:600px){.cert-row{grid-template-columns:1fr;gap:6px;}}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:700px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px;
+    display:flex;align-items:center;gap:16px;transition:border-color .2s;
+    position:relative;cursor:pointer;
+  }
+  .contact-card:hover{border-color:var(--amber);}
+  .copy-flag{
+    position:absolute;top:10px;right:12px;
+    font-family:var(--mono);font-size:10.5px;color:var(--teal);
+    opacity:0;transition:opacity .25s ease;
+  }
+  .copy-flag.show{opacity:1;}
+  .contact-icon{
+    width:38px;height:38px;border-radius:6px;background:var(--teal-dim);
+    display:flex;align-items:center;justify-content:center;color:var(--teal);
+    font-family:var(--mono);font-size:14px;flex-shrink:0;
+  }
+  .contact-label{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:3px;}
+  .contact-value{font-size:14.5px;font-weight:600;}
+
+  footer{padding:36px 0;text-align:center;}
+  footer p{font-family:var(--mono);font-size:11.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> samuel@helsinki:~$</div>
+    <div class="navlinks">
+      <a href="#about">about</a><span>/</span>
+      <a href="#experience">experience</a><span>/</span>
+      <a href="#education">education</a><span>/</span>
+      <a href="#projects">projects</a><span>/</span>
+      <a href="#certs">certs</a><span>/</span>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="scan-sweep"></div>
+  <div class="wrap">
+    <div class="eyebrow">DATA & AUTOMATION · IT & SECURITY ENGINEERING</div>
+    <h1>Samuel Henry A.<br>builds <span class="accent">resilient systems</span> and finds where they break.</h1>
+    <p class="hero-sub">IT infrastructure and security engineer with hands-on experience across identity management, endpoint engineering, and offensive security. MSc in Communications and Data Science, Aalto University &amp; Técnico Lisboa.</p>
+    <div class="hero-meta">
+      <span class="chip">CVSS 8.1 finding: Broken Access Control</span>
+      <span class="chip">TinyML × WiFi Deauth Detection</span>
+      <span class="chip">3× TryHackMe Certified</span>
+    </div>
+    <div class="cta-row">
+      <a href="#contact" class="btn">Get in touch</a>
+      <a href="#projects" class="btn ghost">View projects</a>
+    </div>
+
+    <div class="terminal" id="terminal">
+      <div class="term-bar">
+        <span class="term-dot" style="background:#ff5f56;"></span>
+        <span class="term-dot" style="background:#ffbd2e;"></span>
+        <span class="term-dot" style="background:#27c93f;"></span>
+        <span class="term-title">samuel@helsinki: zsh</span>
+      </div>
+      <div class="term-body" id="termBody">
+        <div class="term-line">Welcome. Type <span class="term-hl">help</span> to see what this terminal can do.</div>
+      </div>
+      <div class="term-input-row">
+        <span class="term-prompt">$</span>
+        <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command…">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">01</span><span class="sec-title">about</span><span class="sec-line"></span></div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm an IT and security engineer based in Helsinki, working at the intersection of <strong>infrastructure administration</strong> and <strong>offensive security</strong>. My background spans Microsoft 365 / Entra ID administration, MDM fleet management, and SSO implementation, alongside penetration testing and vulnerability assessment work.</p>
+        <p>My MSc thesis, <strong>"Device-as-Detector: Lightweight Energy-Based Detection of WiFi Deauthentication Attacks on Constrained IoT Devices,"</strong> explored energy-based side-channel current analysis combined with TinyML to detect attacks on resource-constrained hardware, bridging embedded systems and network security.</p>
+        <p>I've conducted authorized penetration tests that surfaced critical-severity findings, and I build security tooling on the side, including a self-hosted RAG pipeline for data-sovereign threat analysis and a GitHub Action for automated PR vulnerability scanning.</p>
+      </div>
+      <div class="skills-panel">
+        <h4>// FULL STACK</h4>
+        <div class="skill-filters" id="skillFilters">
+          <button class="filter-pill active" data-filter="all">all</button>
+          <button class="filter-pill" data-filter="cloud">cloud & identity</button>
+          <button class="filter-pill" data-filter="security">security</button>
+          <button class="filter-pill" data-filter="endpoint">endpoint / mdm</button>
+          <button class="filter-pill" data-filter="dev">dev</button>
+          <button class="filter-pill" data-filter="data">data / ml</button>
+          <button class="filter-pill" data-filter="infra">infra / devops</button>
+          <button class="filter-pill" data-filter="qa">qa / testing</button>
+        </div>
+        <div class="skill-cloud" id="skillCloud">
+          <span class="skill-pill" data-cat="cloud">Microsoft Entra ID</span>
+          <span class="skill-pill" data-cat="cloud">Azure AD</span>
+          <span class="skill-pill" data-cat="cloud">Office 365 Administration</span>
+          <span class="skill-pill" data-cat="cloud">Azure VMs</span>
+          <span class="skill-pill" data-cat="cloud">SSO Implementation</span>
+          <span class="skill-pill" data-cat="cloud">API Integrations</span>
+          <span class="skill-pill" data-cat="security">Penetration Testing</span>
+          <span class="skill-pill" data-cat="security">Kali Linux</span>
+          <span class="skill-pill" data-cat="security">Burp Suite</span>
+          <span class="skill-pill" data-cat="security">Nmap</span>
+          <span class="skill-pill" data-cat="security">Wireshark</span>
+          <span class="skill-pill" data-cat="security">Metasploit</span>
+          <span class="skill-pill" data-cat="security">Aircrack-ng</span>
+          <span class="skill-pill" data-cat="security">Vulnerability Assessment</span>
+          <span class="skill-pill" data-cat="endpoint">Mosyle MDM</span>
+          <span class="skill-pill" data-cat="endpoint">Munki</span>
+          <span class="skill-pill" data-cat="endpoint">AutoPkg</span>
+          <span class="skill-pill" data-cat="endpoint">Santa</span>
+          <span class="skill-pill" data-cat="endpoint">osquery</span>
+          <span class="skill-pill" data-cat="dev">Python</span>
+          <span class="skill-pill" data-cat="dev">FastAPI</span>
+          <span class="skill-pill" data-cat="dev">Flask</span>
+          <span class="skill-pill" data-cat="dev">PL/SQL</span>
+          <span class="skill-pill" data-cat="dev">Oracle APEX</span>
+          <span class="skill-pill" data-cat="dev">Java</span>
+          <span class="skill-pill" data-cat="data">TinyML</span>
+          <span class="skill-pill" data-cat="data">LangChain</span>
+          <span class="skill-pill" data-cat="data">FAISS</span>
+          <span class="skill-pill" data-cat="data">SQL</span>
+          <span class="skill-pill" data-cat="data">Tableau</span>
+          <span class="skill-pill" data-cat="data">Python Data Stack</span>
+          <span class="skill-pill" data-cat="infra">Docker</span>
+          <span class="skill-pill" data-cat="infra">Kubernetes</span>
+          <span class="skill-pill" data-cat="infra">GitHub Actions</span>
+          <span class="skill-pill" data-cat="infra">CI/CD</span>
+          <span class="skill-pill" data-cat="infra">Server Management</span>
+          <span class="skill-pill" data-cat="infra">SSL Certificate Management</span>
+          <span class="skill-pill" data-cat="qa">Robot Framework</span>
+          <span class="skill-pill" data-cat="qa">Functional Testing</span>
+          <span class="skill-pill" data-cat="qa">Performance Testing</span>
+          <span class="skill-pill" data-cat="qa">API Testing</span>
+          <span class="skill-pill" data-cat="qa">Regression Testing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">02</span><span class="sec-title">experience</span><span class="sec-line"></span></div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-date">RECENT</div>
+        <div>
+          <div class="tl-role">Independent Security Contractor</div>
+          <div class="tl-org">A2F Consulting LLC</div>
+          <p class="tl-desc">Engaged as an external contractor to conduct an authorized penetration test, identifying a CVSS 8.1 Broken Access Control vulnerability. Separately tested a production website, surfacing bugs and coordinating fixes directly with the development team.</p>
+          <div class="tl-tags"><span class="tag">Pentest</span><span class="tag">QA</span><span class="tag">Vulnerability Assessment</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">PRIOR</div>
+        <div>
+          <div class="tl-role">IT Specialist & System Administrator</div>
+          <div class="tl-org">A2F Consulting LLC</div>
+          <p class="tl-desc">Administered Office 365 and Microsoft Entra ID across multiple countries, managed Mosyle MDM fleets, implemented SSO and API integrations, handled server management and SSL certificate renewal, and developed Oracle APEX dashboards. Led enterprise deployment of Microsoft Copilot and conducted a SharePoint gap analysis.</p>
+          <div class="tl-tags"><span class="tag">Entra ID</span><span class="tag">Mosyle MDM</span><span class="tag">Oracle APEX</span><span class="tag">SSO</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2022–2023</div>
+        <div>
+          <div class="tl-role">Web Administrator & IT Support Intern</div>
+          <div class="tl-org">West Ukrainian National University</div>
+          <p class="tl-desc">Administered student account provisioning and registration portals, managed front-end hosting and backend IT services for university web platforms, and troubleshot network connectivity across campus access points.</p>
+          <div class="tl-tags"><span class="tag">Web Admin</span><span class="tag">Networking</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">03</span><span class="sec-title">education</span><span class="sec-line"></span></div>
+    <p class="road-hint reveal">Click a node to open it.</p>
+    <div class="roadmap reveal" id="roadmap">
+      <div class="road-track"></div>
+      <div class="road-node" data-node="1">
+        <div class="node-dot"></div>
+        <div class="node-year">2017</div>
+        <div class="node-label">Self-taught begins</div>
+      </div>
+      <div class="road-node" data-node="2">
+        <div class="node-dot"></div>
+        <div class="node-year">NIIT</div>
+        <div class="node-label">Diploma, Java</div>
+      </div>
+      <div class="road-node" data-node="3">
+        <div class="node-dot"></div>
+        <div class="node-year">BSc</div>
+        <div class="node-label">Software Engineering</div>
+      </div>
+      <div class="road-node" data-node="3b">
+        <div class="node-dot"></div>
+        <div class="node-year">BSc Thesis</div>
+        <div class="node-label">Personal Expense Tracker</div>
+      </div>
+      <div class="road-node" data-node="4">
+        <div class="node-dot"></div>
+        <div class="node-year">2022-23</div>
+        <div class="node-label">Web Admin Internship</div>
+      </div>
+      <div class="road-node" data-node="5">
+        <div class="node-dot"></div>
+        <div class="node-year">MSc</div>
+        <div class="node-label">Aalto x Técnico Lisboa</div>
+      </div>
+      <div class="road-node" data-node="6">
+        <div class="node-dot"></div>
+        <div class="node-year">2026</div>
+        <div class="node-label">Thesis</div>
+      </div>
+    </div>
+    <div class="road-detail" id="roadDetail">
+      <div class="road-detail-inner">
+        <span class="rd-tag">select a node above</span>
+        <p>Hover over or click any point on the path to read about that stage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">projects</span><span class="sec-line"></span></div>
+    <div class="proj-grid reveal">
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-name">SecRAG</span>
+          <a href="https://github.com/samuelHenris" class="proj-link">github →</a>
+        </div>
+        <p class="proj-desc">Self-hosted RAG security pipeline built for data sovereignty. Lets security teams run retrieval-augmented analysis on sensitive data without it leaving their infrastructure.</p>
+        <div class="proj-tags"><span class="tag">FastAPI</span><span class="tag">LangChain</span><span class="tag">FAISS</span><span class="tag">Gemini 2.0</span><span class="tag">Docker</span><span class="tag">Kubernetes</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-name">CodeSentinel</span>
+          <a href="https://github.com/samuelHenris" class="proj-link">github →</a>
+        </div>
+        <p class="proj-desc">AI-powered GitHub Action that scans pull requests for vulnerabilities automatically, catching security issues before they merge into main.</p>
+        <div class="proj-tags"><span class="tag">GitHub Actions</span><span class="tag">AI/LLM</span><span class="tag">DevSecOps</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-name">Device-as-Detector</span>
+          <span class="proj-link">MSc Thesis</span>
+        </div>
+        <p class="proj-desc">Lightweight energy-based detection of WiFi deauthentication attacks on constrained IoT devices, using side-channel current analysis and TinyML. No network stack visibility required.</p>
+        <div class="proj-tags"><span class="tag">TinyML</span><span class="tag">IoT Security</span><span class="tag">Side-channel</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-name">Data Visualization Portfolio</span>
+          <a href="https://public.tableau.com/app/profile/samuel.henry6444/vizzes" class="proj-link">tableau →</a>
+        </div>
+        <p class="proj-desc">Public Tableau visualizations, including work on SDG 16 / rule-of-law indicators for Nigeria drawing on WJP, ACLED, and IDMC datasets.</p>
+        <div class="proj-tags"><span class="tag">Tableau</span><span class="tag">Python</span><span class="tag">Data Viz</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">05</span><span class="sec-title">certifications</span><span class="sec-line"></span></div>
+    <div class="cert-list reveal" id="certList">
+      <div class="cert-row">
+        <span class="cert-name">TryHackMe: Security Engineer</span>
+        <span class="cert-id">THM-IRZ4FTXLEF</span>
+        <span class="cert-valid">valid 2026–2029</span>
+      </div>
+      <div class="cert-row">
+        <span class="cert-name">TryHackMe: Jr Penetration Tester</span>
+        <span class="cert-id">THM-3KMQKNH1E2</span>
+        <span class="cert-valid">valid 2026–2029</span>
+      </div>
+      <div class="cert-row">
+        <span class="cert-name">TryHackMe: DevSecOps</span>
+        <span class="cert-id">THM-VNTIREBPOK</span>
+        <span class="cert-valid">issued Apr 2026 · exp Apr 2029</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">06</span><span class="sec-title">contact</span><span class="sec-line"></span></div>
+    <div class="contact-grid reveal">
+      <a href="mailto:abiolahenrys@gmail.com" class="contact-card" data-copy="abiolahenrys@gmail.com">
+        <span class="copy-flag">copied</span>
+        <div class="contact-icon">@</div>
+        <div><div class="contact-label">EMAIL</div><div class="contact-value">abiolahenrys@gmail.com</div></div>
+      </a>
+      <a href="tel:+358465373385" class="contact-card" data-copy="+358465373385">
+        <span class="copy-flag">copied</span>
+        <div class="contact-icon">#</div>
+        <div><div class="contact-label">PHONE, FI</div><div class="contact-value">+358 46 537 3385</div></div>
+      </a>
+      <a href="https://linkedin.com/in/samuelhenria" class="contact-card" target="_blank" rel="noopener">
+        <div class="contact-icon">in</div>
+        <div><div class="contact-label">LINKEDIN</div><div class="contact-value">/in/samuelhenria</div></div>
+      </a>
+      <a href="https://github.com/samuelHenris" class="contact-card" target="_blank" rel="noopener">
+        <div class="contact-icon">{}</div>
+        <div><div class="contact-label">GITHUB</div><div class="contact-value">/samuelHenris</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Samuel Henry A. · Built with intent, hosted for free.</p>
+</footer>
+
+<script>
+// scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, {threshold:0.12});
+revealEls.forEach(el=>io.observe(el));
+
+// terminal
+const termBody = document.getElementById('termBody');
+const termInput = document.getElementById('termInput');
+
+function printLine(text, cls=''){
+  const div = document.createElement('div');
+  div.className = 'term-line' + (cls ? ' '+cls : '');
+  div.innerHTML = text;
+  termBody.appendChild(div);
+  termBody.scrollTop = termBody.scrollHeight;
+}
+
+const commands = {
+  help: ()=> `Available commands:
+  <span class="term-hl">whoami</span>     who I am
+  <span class="term-hl">skills</span>     core technical stack
+  <span class="term-hl">experience</span> jump to work history
+  <span class="term-hl">projects</span>   jump to projects
+  <span class="term-hl">certs</span>      jump to certifications
+  <span class="term-hl">contact</span>    jump to contact info
+  <span class="term-hl">sudo</span>       try it
+  <span class="term-hl">clear</span>      clear the terminal`,
+  whoami: ()=> `Samuel Henry A. Data & Automation, IT & Security Engineering. Helsinki FI.
+MSc Communications & Data Science, Aalto University × Técnico Lisboa.`,
+  skills: ()=> `Entra ID / M365 · Mosyle MDM · Burp Suite / Nmap / Metasploit
+Python / FastAPI / PL/SQL · Docker / Kubernetes · TinyML`,
+  sudo: ()=> `Permission denied: nice try though. This isn't that kind of demo.`,
+  experience: ()=> { document.getElementById('experience').scrollIntoView({behavior:'smooth'}); return 'Jumping to experience…'; },
+  projects: ()=> { document.getElementById('projects').scrollIntoView({behavior:'smooth'}); return 'Jumping to projects…'; },
+  certs: ()=> { document.getElementById('certs').scrollIntoView({behavior:'smooth'}); return 'Jumping to certifications…'; },
+  contact: ()=> { document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return 'Jumping to contact…'; },
+  clear: ()=> { termBody.innerHTML=''; return null; }
+};
+
+termInput.addEventListener('keydown', (e)=>{
+  if(e.key !== 'Enter') return;
+  const raw = termInput.value.trim();
+  if(!raw) return;
+  printLine(raw, 'cmd');
+  const key = raw.toLowerCase();
+  if(commands[key]){
+    const out = commands[key]();
+    if(out) printLine(out);
+  } else {
+    printLine(`command not found: ${raw}. type <span class="term-hl">help</span>`);
+  }
+  termInput.value = '';
+});
+
+document.getElementById('terminal').addEventListener('click', ()=> termInput.focus());
+
+// skill filter matrix
+const filterPills = document.querySelectorAll('.filter-pill');
+const skillPills = document.querySelectorAll('.skill-pill');
+filterPills.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filterPills.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    skillPills.forEach(s=>{
+      if(f === 'all'){ s.classList.remove('dim'); s.classList.remove('hl'); }
+      else if(s.dataset.cat === f){ s.classList.remove('dim'); s.classList.add('hl'); }
+      else { s.classList.add('dim'); s.classList.remove('hl'); }
+    });
+  });
+});
+
+// education roadmap
+const roadData = {
+  1: { tag: '2017, self-taught begins', text: 'Started self-teaching IT and programming at seventeen, working through languages and systems concepts independently before any formal training.' },
+  2: { tag: 'NIIT, diploma in Java technologies', text: 'Completed a NIIT diploma focused on Java, building a structured foundation in object-oriented programming and core software development.' },
+  3: { tag: 'BSc, software engineering', text: 'Bachelor of Science in Software Engineering at West Ukrainian National University, covering backend development, databases, and systems design.' },
+  '3b': { tag: 'BSc thesis, Personal Expense Tracker (PET)', text: 'Designed and built a personal finance tracking application as the capstone project for the BSc, covering the full software lifecycle from requirements to implementation.' },
+  4: { tag: '2022-23, web admin & IT support internship', text: 'Administered student account provisioning and registration portals at West Ukrainian National University. Managed hosting and backend services for university web platforms, and troubleshot network connectivity across campus access points.' },
+  5: { tag: 'MSc, communications and data science', text: 'Dual degree between Aalto University and Técnico Lisboa, combining communications engineering with data science.' },
+  6: { tag: 'Thesis', text: '"Device-as-Detector: Lightweight Energy-Based Detection of WiFi Deauthentication Attacks on Constrained IoT Devices." An energy-based side-channel current analysis and TinyML approach for resource-constrained hardware.' }
+};
+const roadNodes = document.querySelectorAll('.road-node');
+const roadDetail = document.getElementById('roadDetail');
+
+function setRoadNode(id){
+  roadNodes.forEach(n => n.classList.toggle('active', n.dataset.node === id));
+  const d = roadData[id];
+  roadDetail.classList.add('lit');
+  roadDetail.querySelector('.road-detail-inner').innerHTML =
+    `<span class="rd-tag">${d.tag}</span><p>${d.text}</p>`;
+}
+
+roadNodes.forEach(node=>{
+  node.addEventListener('click', ()=> setRoadNode(node.dataset.node));
+  node.addEventListener('mouseenter', ()=> setRoadNode(node.dataset.node));
+});
+
+// copy to clipboard on contact cards
+document.querySelectorAll('.contact-card[data-copy]').forEach(card=>{
+  card.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const val = card.getAttribute('data-copy');
+    navigator.clipboard.writeText(val).then(()=>{
+      const flag = card.querySelector('.copy-flag');
+      flag.classList.add('show');
+      setTimeout(()=> flag.classList.remove('show'), 1400);
+    });
+  });
+});
+
+// cert scan reveal, staggered when the cert section enters view
+const certList = document.getElementById('certList');
+if(certList){
+  const certIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const rows = certList.querySelectorAll('.cert-row');
+        rows.forEach((row, i)=>{
+          setTimeout(()=> row.classList.add('scanned'), i * 180);
+        });
+        certIO.unobserve(certList);
+      }
+    });
+  }, {threshold:0.3});
+  certIO.observe(certList);
+}
+</script>
+</body>
+</html>
