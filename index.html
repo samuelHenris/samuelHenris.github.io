@@ -294,26 +294,45 @@
   .proj-desc{color:var(--muted);font-size:14px;margin-bottom:14px;}
   .proj-tags{display:flex;flex-wrap:wrap;gap:7px;}
 
-  /* CERTS */
-  .cert-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
-  .cert-row{
-    background:var(--surface);
-    display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;
-    padding:16px 20px;
-    position:relative;
+  /* CERTS — marquee ticker */
+  .cert-ticker-wrap{
     overflow:hidden;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+    position:relative;
   }
-  .cert-row::before{
-    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  .cert-ticker-wrap::before,.cert-ticker-wrap::after{
+    content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+  }
+  .cert-ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);}
+  .cert-ticker-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent);}
+  .cert-ticker{
+    display:flex;gap:0;
+    width:max-content;
+    animation:ticker 28s linear infinite;
+  }
+  .cert-ticker:hover{animation-play-state:paused;}
+  @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+  .cert-item{
+    display:flex;align-items:center;gap:18px;
+    padding:0 40px;
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .cert-item-status{
+    width:8px;height:8px;border-radius:50%;
     background:var(--teal);
-    transform:scaleY(0);transform-origin:top;
-    transition:transform .5s ease;
+    box-shadow:0 0 6px var(--teal);
+    flex-shrink:0;
+    animation:glow 2s ease-in-out infinite;
   }
-  .cert-row.scanned::before{transform:scaleY(1);}
-  .cert-name{font-size:14.5px;font-weight:600;}
-  .cert-id{font-family:var(--mono);font-size:11.5px;color:var(--muted);}
-  .cert-valid{font-family:var(--mono);font-size:11.5px;color:var(--teal);}
-  @media (max-width:600px){.cert-row{grid-template-columns:1fr;gap:6px;}}
+  .cert-item-status.amber{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+  @keyframes glow{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  .cert-item-issuer{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:0.06em;}
+  .cert-item-name{font-family:var(--mono);font-size:13.5px;font-weight:600;color:var(--text);}
+  .cert-item-id{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.04em;}
+  .cert-item-valid{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
 
   /* CONTACT */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -362,7 +381,7 @@
   <div class="scan-sweep"></div>
   <div class="wrap">
     <div class="eyebrow">DATA & AUTOMATION · IT & SECURITY ENGINEERING</div>
-    <h1>Samuel Henry A.<br>builds <span class="accent">resilient systems</span> and finds where they break.</h1>
+    <h1>Samuel Henry A.<br><span class="accent">Security engineer.</span> Systems thinker. Threat finder.</h1>
     <p class="hero-sub">IT infrastructure and security engineer with hands-on experience across identity management, endpoint engineering, and offensive security. MSc in Communications and Data Science, Aalto University &amp; Técnico Lisboa.</p>
     <div class="hero-meta">
       <span class="chip">CVSS 8.1 finding: Broken Access Control</span>
@@ -500,7 +519,6 @@
 <section id="education">
   <div class="wrap">
     <div class="sec-head reveal"><span class="sec-num">03</span><span class="sec-title">education</span><span class="sec-line"></span></div>
-    <p class="road-hint reveal">Click a node to open it.</p>
     <div class="roadmap reveal" id="roadmap">
       <div class="road-track"></div>
       <div class="road-node" data-node="1">
@@ -581,7 +599,7 @@
           <span class="proj-name">Data Visualization Portfolio</span>
           <a href="https://public.tableau.com/app/profile/samuel.henry6444/vizzes" class="proj-link">tableau →</a>
         </div>
-        <p class="proj-desc">Public Tableau visualizations, including work on SDG 16 / rule-of-law indicators for Nigeria drawing on WJP, ACLED, and IDMC datasets.</p>
+        <p class="proj-desc">Public Tableau dashboards covering homicide data analysis, British Airways customer review averages, and a Netflix content visualization.</p>
         <div class="proj-tags"><span class="tag">Tableau</span><span class="tag">Python</span><span class="tag">Data Viz</span></div>
       </div>
     </div>
@@ -591,22 +609,179 @@
 <section id="certs">
   <div class="wrap">
     <div class="sec-head reveal"><span class="sec-num">05</span><span class="sec-title">certifications</span><span class="sec-line"></span></div>
-    <div class="cert-list reveal" id="certList">
-      <div class="cert-row">
-        <span class="cert-name">TryHackMe: Security Engineer</span>
-        <span class="cert-id">THM-IRZ4FTXLEF</span>
-        <span class="cert-valid">valid 2026–2029</span>
+    <div class="cert-marquee-wrap reveal" id="certList">
+      <div class="cert-marquee-track" id="certTrack">
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(240,166,77,0.15);color:#f0a64d;">N</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">NIIT</span>
+            <span class="cert-badge-name">Diploma in Java Technologies</span>
+            <span class="cert-badge-id">completed</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">TRYHACKME</span>
+            <span class="cert-badge-name">Security Engineer</span>
+            <span class="cert-badge-id">THM-IRZ4FTXLEF</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">TRYHACKME</span>
+            <span class="cert-badge-name">Jr Penetration Tester</span>
+            <span class="cert-badge-id">THM-3KMQKNH1E2</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">TRYHACKME</span>
+            <span class="cert-badge-name">DevSecOps</span>
+            <span class="cert-badge-id">THM-VNTIREBPOK</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <!-- duplicate set for seamless loop -->
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(240,166,77,0.15);color:#f0a64d;">N</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">NIIT</span>
+            <span class="cert-badge-name">Diploma in Java Technologies</span>
+            <span class="cert-badge-id">completed</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">TRYHACKME</span>
+            <span class="cert-badge-name">Security Engineer</span>
+            <span class="cert-badge-id">THM-IRZ4FTXLEF</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">TRYHACKME</span>
+            <span class="cert-badge-name">Jr Penetration Tester</span>
+            <span class="cert-badge-id">THM-3KMQKNH1E2</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
+        <div class="cert-badge">
+          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
+          <div class="cert-badge-info">
+            <span class="cert-badge-issuer">TRYHACKME</span>
+            <span class="cert-badge-name">DevSecOps</span>
+            <span class="cert-badge-id">THM-VNTIREBPOK</span>
+          </div>
+        </div>
+        <div class="cert-badge-sep">/</div>
       </div>
-      <div class="cert-row">
-        <span class="cert-name">TryHackMe: Jr Penetration Tester</span>
-        <span class="cert-id">THM-3KMQKNH1E2</span>
-        <span class="cert-valid">valid 2026–2029</span>
+    </div>
+              <div class="cert-name">Diploma in Java Technologies</div>
+            </div>
+            <div class="cert-front-bar"></div>
+            <div class="cert-hint">flip for credential &rsaquo;</div>
+          </div>
+          <div class="cert-back">
+            <div>
+              <div class="cert-back-label">// CREDENTIAL</div>
+              <div class="cert-back-id">NIIT · Java Technologies</div>
+            </div>
+            <div class="cert-back-footer">
+              <span class="cert-back-valid">completed</span>
+              <span class="cert-verified">COMPLETED</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="cert-row">
-        <span class="cert-name">TryHackMe: DevSecOps</span>
-        <span class="cert-id">THM-VNTIREBPOK</span>
-        <span class="cert-valid">issued Apr 2026 · exp Apr 2029</span>
+
+      <div class="cert-flip" id="cert-2">
+        <div class="cert-flip-inner">
+          <div class="cert-front">
+            <div class="cert-front-top">
+              <div class="cert-issuer-row">
+                <div class="cert-issuer-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">T</div>
+                <span class="cert-issuer-name">TRYHACKME</span>
+              </div>
+              <div class="cert-name">Security Engineer</div>
+            </div>
+            <div class="cert-front-bar"></div>
+            <div class="cert-hint">flip for credential &rsaquo;</div>
+          </div>
+          <div class="cert-back">
+            <div>
+              <div class="cert-back-label">// CREDENTIAL ID</div>
+              <div class="cert-back-id">THM-IRZ4FTXLEF</div>
+            </div>
+            <div class="cert-back-footer">
+              <span class="cert-back-valid">valid 2026 · 2029</span>
+              <span class="cert-verified">ACTIVE</span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="cert-flip" id="cert-3">
+        <div class="cert-flip-inner">
+          <div class="cert-front">
+            <div class="cert-front-top">
+              <div class="cert-issuer-row">
+                <div class="cert-issuer-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">T</div>
+                <span class="cert-issuer-name">TRYHACKME</span>
+              </div>
+              <div class="cert-name">Jr Penetration Tester</div>
+            </div>
+            <div class="cert-front-bar"></div>
+            <div class="cert-hint">flip for credential &rsaquo;</div>
+          </div>
+          <div class="cert-back">
+            <div>
+              <div class="cert-back-label">// CREDENTIAL ID</div>
+              <div class="cert-back-id">THM-3KMQKNH1E2</div>
+            </div>
+            <div class="cert-back-footer">
+              <span class="cert-back-valid">valid 2026 · 2029</span>
+              <span class="cert-verified">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-flip" id="cert-4">
+        <div class="cert-flip-inner">
+          <div class="cert-front">
+            <div class="cert-front-top">
+              <div class="cert-issuer-row">
+                <div class="cert-issuer-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">T</div>
+                <span class="cert-issuer-name">TRYHACKME</span>
+              </div>
+              <div class="cert-name">DevSecOps</div>
+            </div>
+            <div class="cert-front-bar"></div>
+            <div class="cert-hint">flip for credential &rsaquo;</div>
+          </div>
+          <div class="cert-back">
+            <div>
+              <div class="cert-back-label">// CREDENTIAL ID</div>
+              <div class="cert-back-id">THM-VNTIREBPOK</div>
+            </div>
+            <div class="cert-back-footer">
+              <span class="cert-back-valid">Apr 2026 · Apr 2029</span>
+              <span class="cert-verified">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -638,7 +813,7 @@
 </section>
 
 <footer>
-  <p>© 2026 Samuel Henry A. · Built with intent, hosted for free.</p>
+  <p>© 2026 Samuel Henry A.</p>
 </footer>
 
 <script>
@@ -663,26 +838,118 @@ function printLine(text, cls=''){
   termBody.scrollTop = termBody.scrollHeight;
 }
 
+const bootTime = new Date(Date.now() - Math.floor(Math.random()*9e7+3e7));
 const commands = {
   help: ()=> `Available commands:
-  <span class="term-hl">whoami</span>     who I am
-  <span class="term-hl">skills</span>     core technical stack
-  <span class="term-hl">experience</span> jump to work history
-  <span class="term-hl">projects</span>   jump to projects
-  <span class="term-hl">certs</span>      jump to certifications
-  <span class="term-hl">contact</span>    jump to contact info
-  <span class="term-hl">sudo</span>       try it
-  <span class="term-hl">clear</span>      clear the terminal`,
-  whoami: ()=> `Samuel Henry A. Data & Automation, IT & Security Engineering. Helsinki FI.
-MSc Communications & Data Science, Aalto University × Técnico Lisboa.`,
-  skills: ()=> `Entra ID / M365 · Mosyle MDM · Burp Suite / Nmap / Metasploit
-Python / FastAPI / PL/SQL · Docker / Kubernetes · TinyML`,
-  sudo: ()=> `Permission denied: nice try though. This isn't that kind of demo.`,
-  experience: ()=> { document.getElementById('experience').scrollIntoView({behavior:'smooth'}); return 'Jumping to experience…'; },
-  projects: ()=> { document.getElementById('projects').scrollIntoView({behavior:'smooth'}); return 'Jumping to projects…'; },
-  certs: ()=> { document.getElementById('certs').scrollIntoView({behavior:'smooth'}); return 'Jumping to certifications…'; },
-  contact: ()=> { document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return 'Jumping to contact…'; },
-  clear: ()=> { termBody.innerHTML=''; return null; }
+  <span class="term-hl">whoami</span>       who I am
+  <span class="term-hl">ls</span>           list directory
+  <span class="term-hl">cat cv.txt</span>   view quick CV summary
+  <span class="term-hl">skills</span>       core technical stack
+  <span class="term-hl">uname</span>        system info
+  <span class="term-hl">uptime</span>       how long I have been running
+  <span class="term-hl">nmap</span>         run a scan
+  <span class="term-hl">ping</span>         ping me
+  <span class="term-hl">open github</span>  open GitHub profile
+  <span class="term-hl">open linkedin</span> open LinkedIn profile
+  <span class="term-hl">experience</span>   jump to work history
+  <span class="term-hl">projects</span>     jump to projects
+  <span class="term-hl">certs</span>        jump to certifications
+  <span class="term-hl">contact</span>      jump to contact section
+  <span class="term-hl">sudo</span>         try it
+  <span class="term-hl">clear</span>        clear the terminal`,
+
+  whoami: ()=> `samuel-henry-a
+Role    : IT & Security Engineer
+Location: Helsinki, FI
+Focus   : Identity, Endpoint, Offensive Security
+Status  : <span style="color:#27c93f">open to work</span>`,
+
+  ls: ()=> `drwxr-xr-x  projects/
+drwxr-xr-x  certifications/
+drwxr-xr-x  experience/
+-rw-r--r--  cv.txt
+-rw-r--r--  thesis.pdf
+-rw-r--r--  README.md`,
+
+  'cat cv.txt': ()=>`Samuel Henry A. — IT & Security Engineer
+Helsinki, FI · abiolahenrys@gmail.com
+
+EDUCATION
+  MSc  Communications & Data Science, Aalto x Técnico Lisboa (2026)
+  BSc  Software Engineering, West Ukrainian National University
+
+RECENT ROLES
+  Independent Security Contractor — A2F Consulting LLC
+  IT Specialist & SysAdmin       — A2F Consulting LLC
+  Web Admin & IT Support Intern  — West Ukrainian National University
+
+CERTS
+  TryHackMe: Security Engineer   (THM-IRZ4FTXLEF)
+  TryHackMe: Jr Pen Tester       (THM-3KMQKNH1E2)
+  TryHackMe: DevSecOps           (THM-VNTIREBPOK)
+  NIIT: Diploma in Java Technologies`,
+
+  skills: ()=>`Cloud / Identity : Entra ID, Azure AD, M365, SSO
+Offensive Sec   : Burp Suite, Nmap, Metasploit, Kali, Aircrack-ng
+Endpoint / MDM  : Mosyle, Munki, AutoPkg, Santa, osquery
+Dev             : Python, FastAPI, Flask, PL/SQL, Java, Oracle APEX
+Infra           : Docker, Kubernetes, GitHub Actions, CI/CD
+Data / ML       : TinyML, LangChain, FAISS, Tableau
+QA / Testing    : Robot Framework, API, Functional, Regression`,
+
+  uname: ()=>`samuel-os 1.0.0-LTS #security-hardened
+Kernel   : Human-Brain 3.1 (Helsinki build)
+Arch     : x86_64-engineer
+Shell    : zsh
+Uptime   : ${Math.floor((Date.now()-bootTime)/86400000)}d since last reboot`,
+
+  uptime: ()=>{
+    const yrs = ((Date.now() - new Date('2017-01-01'))/31536e6).toFixed(1);
+    return `samuel@helsinki up ${yrs} years
+load average: security 0.91, automation 0.78, learning 0.99
+processes: 1 engineer, running fine`;
+  },
+
+  nmap: ()=>`Starting Nmap scan on samuel-henry-a...
+PORT      STATE   SERVICE
+22/tcp    open    ssh
+80/tcp    open    http
+443/tcp   open    https
+8080/tcp  closed  ---
+Nmap done: 1 host up, 3 open ports
+<span style="color:#27c93f">No vulnerabilities detected. Clean system.</span>`,
+
+  ping: ()=>`PING samuel-henry-a (helsinki.fi): 56 bytes
+64 bytes from samuel: icmp_seq=0 ttl=64 time=12ms
+64 bytes from samuel: icmp_seq=1 ttl=64 time=9ms
+64 bytes from samuel: icmp_seq=2 ttl=64 time=11ms
+--- samuel-henry-a ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss
+<span style="color:#27c93f">Response time: fast. Hire probability: high.</span>`,
+
+  'open github': ()=>{ window.open('https://github.com/samuelHenris','_blank'); return 'Opening github.com/samuelHenris...'; },
+  'open linkedin': ()=>{ window.open('https://linkedin.com/in/samuelhenria','_blank'); return 'Opening linkedin.com/in/samuelhenria...'; },
+
+  sudo: ()=>`[sudo] password for visitor: 
+Sorry, try again.
+[sudo] password for visitor:
+sudo: 3 incorrect password attempts
+<span style="color:#ff5f56">Access denied. Nice try.</span>`,
+
+  experience: ()=> { document.getElementById('experience').scrollIntoView({behavior:'smooth'}); return 'cd experience/'; },
+  projects: ()=> { document.getElementById('projects').scrollIntoView({behavior:'smooth'}); return 'cd projects/'; },
+  certs: ()=> { document.getElementById('certs').scrollIntoView({behavior:'smooth'}); return 'cd certifications/'; },
+  contact: ()=> { document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return 'cd contact/'; },
+  clear: ()=> { termBody.innerHTML=''; return null; },
+  exit: ()=> `Nice try. You can't exit the matrix, ${['friend','visitor','recruiter'][Math.floor(Math.random()*3)]}.`,
+  matrix: ()=>`Wake up, Samuel...
+The Matrix has you...
+Follow the white rabbit.
+<span style="color:var(--teal)">01001000 01101001 01110010 01100101 00100000 01101101 01100101</span>`,
+  coffee: ()=>`Brewing...
+[##########] 100%
+Error: coffee module not found in /usr/bin
+<span style="color:var(--amber)">Running on pure curiosity instead.</span>`
 };
 
 termInput.addEventListener('keydown', (e)=>{
@@ -757,22 +1024,7 @@ document.querySelectorAll('.contact-card[data-copy]').forEach(card=>{
   });
 });
 
-// cert scan reveal, staggered when the cert section enters view
-const certList = document.getElementById('certList');
-if(certList){
-  const certIO = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const rows = certList.querySelectorAll('.cert-row');
-        rows.forEach((row, i)=>{
-          setTimeout(()=> row.classList.add('scanned'), i * 180);
-        });
-        certIO.unobserve(certList);
-      }
-    });
-  }, {threshold:0.3});
-  certIO.observe(certList);
-}
+
 </script>
 </body>
 </html>
