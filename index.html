@@ -294,45 +294,56 @@
   .proj-desc{color:var(--muted);font-size:14px;margin-bottom:14px;}
   .proj-tags{display:flex;flex-wrap:wrap;gap:7px;}
 
-  /* CERTS — marquee ticker */
-  .cert-ticker-wrap{
+  /* CERTS */
+  .cert-log{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
     overflow:hidden;
-    border-top:1px solid var(--line);
+  }
+  .cert-log-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11px 20px;
+    background:var(--surface-2);
     border-bottom:1px solid var(--line);
-    padding:18px 0;
-    position:relative;
+    font-family:var(--mono);font-size:11px;
   }
-  .cert-ticker-wrap::before,.cert-ticker-wrap::after{
-    content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+  .cert-log-header .cmd{color:var(--teal);}
+  .cert-log-header .count{color:var(--muted);}
+  .cert-entry{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:16px;
+    padding:15px 20px;
+    border-bottom:1px solid var(--line);
+    transition:background .2s;
   }
-  .cert-ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);}
-  .cert-ticker-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent);}
-  .cert-ticker{
-    display:flex;gap:0;
-    width:max-content;
-    animation:ticker 28s linear infinite;
+  .cert-entry:last-child{border-bottom:none;}
+  .cert-entry:hover{background:rgba(86,230,201,0.03);}
+  .cert-check{
+    font-family:var(--mono);font-size:13px;
+    color:var(--teal);
+    width:18px;text-align:center;flex-shrink:0;
   }
-  .cert-ticker:hover{animation-play-state:paused;}
-  @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-  .cert-item{
-    display:flex;align-items:center;gap:18px;
-    padding:0 40px;
-    border-right:1px solid var(--line);
-    white-space:nowrap;
+  .cert-entry-main{}
+  .cert-entry-name{font-size:14.5px;font-weight:600;margin-bottom:3px;}
+  .cert-entry-org{font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .cert-entry-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+  .cert-entry-id{
+    font-family:var(--mono);font-size:11px;
+    color:var(--teal);
+    background:var(--teal-dim);
+    border:1px solid rgba(86,230,201,0.2);
+    padding:3px 8px;border-radius:3px;
   }
-  .cert-item-status{
-    width:8px;height:8px;border-radius:50%;
-    background:var(--teal);
-    box-shadow:0 0 6px var(--teal);
-    flex-shrink:0;
-    animation:glow 2s ease-in-out infinite;
+  .cert-entry-id.amber{
+    color:var(--amber);
+    background:var(--amber-dim);
+    border-color:rgba(240,166,77,0.2);
   }
-  .cert-item-status.amber{background:var(--amber);box-shadow:0 0 6px var(--amber);}
-  @keyframes glow{0%,100%{opacity:1;}50%{opacity:0.4;}}
-  .cert-item-issuer{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:0.06em;}
-  .cert-item-name{font-family:var(--mono);font-size:13.5px;font-weight:600;color:var(--text);}
-  .cert-item-id{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.04em;}
-  .cert-item-valid{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
+  .cert-entry-exp{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
+  @media(max-width:600px){.cert-entry-right{display:none;}}
 
   /* CONTACT */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -611,223 +622,57 @@
     <div class="sec-head reveal"><span class="sec-num">05</span><span class="sec-title">certifications</span><span class="sec-line"></span></div>
     <div class="cert-log reveal" id="certList">
       <div class="cert-log-header">
-        <span>verify --credentials samuel-henry-a</span>
-        <span style="margin-left:auto;">4 records found</span>
+        <span class="cmd">$ verify --credentials samuel-henry-a</span>
+        <span class="count">4 records</span>
       </div>
-      <div class="cert-log-body">
-        <div class="cert-row" data-delay="0">
-          <div class="cert-check">&#x25CB;</div>
-          <div class="cert-main">
-            <span class="cert-title">Diploma in Java Technologies</span>
-            <span class="cert-sub">NIIT</span>
-          </div>
-          <div class="cert-meta">
-            <span class="cert-id-tag">completed</span>
-            <span class="cert-validity">no expiry</span>
-          </div>
+      <div class="cert-entry">
+        <div class="cert-check">[+]</div>
+        <div class="cert-entry-main">
+          <div class="cert-entry-name">Diploma in Java Technologies</div>
+          <div class="cert-entry-org">NIIT</div>
         </div>
-        <div class="cert-row" data-delay="220">
-          <div class="cert-check">&#x25CB;</div>
-          <div class="cert-main">
-            <span class="cert-title">Security Engineer</span>
-            <span class="cert-sub">TRYHACKME</span>
-          </div>
-          <div class="cert-meta">
-            <span class="cert-id-tag">THM-IRZ4FTXLEF</span>
-            <span class="cert-validity">2026 — 2029</span>
-          </div>
-        </div>
-        <div class="cert-row" data-delay="440">
-          <div class="cert-check">&#x25CB;</div>
-          <div class="cert-main">
-            <span class="cert-title">Jr Penetration Tester</span>
-            <span class="cert-sub">TRYHACKME</span>
-          </div>
-          <div class="cert-meta">
-            <span class="cert-id-tag">THM-3KMQKNH1E2</span>
-            <span class="cert-validity">2026 — 2029</span>
-          </div>
-        </div>
-        <div class="cert-row" data-delay="660">
-          <div class="cert-check">&#x25CB;</div>
-          <div class="cert-main">
-            <span class="cert-title">DevSecOps</span>
-            <span class="cert-sub">TRYHACKME</span>
-          </div>
-          <div class="cert-meta">
-            <span class="cert-id-tag">THM-VNTIREBPOK</span>
-            <span class="cert-validity">Apr 2026 — Apr 2029</span>
-          </div>
+        <div class="cert-entry-right">
+          <span class="cert-entry-id amber">completed</span>
+          <span class="cert-entry-exp">no expiry</span>
         </div>
       </div>
-    </div>
+      <div class="cert-entry">
+        <div class="cert-check">[+]</div>
+        <div class="cert-entry-main">
+          <div class="cert-entry-name">Security Engineer</div>
+          <div class="cert-entry-org">TryHackMe</div>
         </div>
-        <div class="cert-badge-sep">/</div>
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">TRYHACKME</span>
-            <span class="cert-badge-name">Security Engineer</span>
-            <span class="cert-badge-id">THM-IRZ4FTXLEF</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">TRYHACKME</span>
-            <span class="cert-badge-name">Jr Penetration Tester</span>
-            <span class="cert-badge-id">THM-3KMQKNH1E2</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">TRYHACKME</span>
-            <span class="cert-badge-name">DevSecOps</span>
-            <span class="cert-badge-id">THM-VNTIREBPOK</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-        <!-- duplicate set for seamless loop -->
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(240,166,77,0.15);color:#f0a64d;">N</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">NIIT</span>
-            <span class="cert-badge-name">Diploma in Java Technologies</span>
-            <span class="cert-badge-id">completed</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">TRYHACKME</span>
-            <span class="cert-badge-name">Security Engineer</span>
-            <span class="cert-badge-id">THM-IRZ4FTXLEF</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">TRYHACKME</span>
-            <span class="cert-badge-name">Jr Penetration Tester</span>
-            <span class="cert-badge-id">THM-3KMQKNH1E2</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-        <div class="cert-badge">
-          <div class="cert-badge-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">TH</div>
-          <div class="cert-badge-info">
-            <span class="cert-badge-issuer">TRYHACKME</span>
-            <span class="cert-badge-name">DevSecOps</span>
-            <span class="cert-badge-id">THM-VNTIREBPOK</span>
-          </div>
-        </div>
-        <div class="cert-badge-sep">/</div>
-      </div>
-    </div>
-              <div class="cert-name">Diploma in Java Technologies</div>
-            </div>
-            <div class="cert-front-bar"></div>
-            <div class="cert-hint">flip for credential &rsaquo;</div>
-          </div>
-          <div class="cert-back">
-            <div>
-              <div class="cert-back-label">// CREDENTIAL</div>
-              <div class="cert-back-id">NIIT · Java Technologies</div>
-            </div>
-            <div class="cert-back-footer">
-              <span class="cert-back-valid">completed</span>
-              <span class="cert-verified">COMPLETED</span>
-            </div>
-          </div>
+        <div class="cert-entry-right">
+          <span class="cert-entry-id">THM-IRZ4FTXLEF</span>
+          <span class="cert-entry-exp">2026 to 2029</span>
         </div>
       </div>
-
-      <div class="cert-flip" id="cert-2">
-        <div class="cert-flip-inner">
-          <div class="cert-front">
-            <div class="cert-front-top">
-              <div class="cert-issuer-row">
-                <div class="cert-issuer-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">T</div>
-                <span class="cert-issuer-name">TRYHACKME</span>
-              </div>
-              <div class="cert-name">Security Engineer</div>
-            </div>
-            <div class="cert-front-bar"></div>
-            <div class="cert-hint">flip for credential &rsaquo;</div>
-          </div>
-          <div class="cert-back">
-            <div>
-              <div class="cert-back-label">// CREDENTIAL ID</div>
-              <div class="cert-back-id">THM-IRZ4FTXLEF</div>
-            </div>
-            <div class="cert-back-footer">
-              <span class="cert-back-valid">valid 2026 · 2029</span>
-              <span class="cert-verified">ACTIVE</span>
-            </div>
-          </div>
+      <div class="cert-entry">
+        <div class="cert-check">[+]</div>
+        <div class="cert-entry-main">
+          <div class="cert-entry-name">Jr Penetration Tester</div>
+          <div class="cert-entry-org">TryHackMe</div>
+        </div>
+        <div class="cert-entry-right">
+          <span class="cert-entry-id">THM-3KMQKNH1E2</span>
+          <span class="cert-entry-exp">2026 to 2029</span>
         </div>
       </div>
-
-      <div class="cert-flip" id="cert-3">
-        <div class="cert-flip-inner">
-          <div class="cert-front">
-            <div class="cert-front-top">
-              <div class="cert-issuer-row">
-                <div class="cert-issuer-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">T</div>
-                <span class="cert-issuer-name">TRYHACKME</span>
-              </div>
-              <div class="cert-name">Jr Penetration Tester</div>
-            </div>
-            <div class="cert-front-bar"></div>
-            <div class="cert-hint">flip for credential &rsaquo;</div>
-          </div>
-          <div class="cert-back">
-            <div>
-              <div class="cert-back-label">// CREDENTIAL ID</div>
-              <div class="cert-back-id">THM-3KMQKNH1E2</div>
-            </div>
-            <div class="cert-back-footer">
-              <span class="cert-back-valid">valid 2026 · 2029</span>
-              <span class="cert-verified">ACTIVE</span>
-            </div>
-          </div>
+      <div class="cert-entry">
+        <div class="cert-check">[+]</div>
+        <div class="cert-entry-main">
+          <div class="cert-entry-name">DevSecOps</div>
+          <div class="cert-entry-org">TryHackMe</div>
+        </div>
+        <div class="cert-entry-right">
+          <span class="cert-entry-id">THM-VNTIREBPOK</span>
+          <span class="cert-entry-exp">Apr 2026 to Apr 2029</span>
         </div>
       </div>
-
-      <div class="cert-flip" id="cert-4">
-        <div class="cert-flip-inner">
-          <div class="cert-front">
-            <div class="cert-front-top">
-              <div class="cert-issuer-row">
-                <div class="cert-issuer-icon" style="background:rgba(86,230,201,0.12);color:var(--teal);">T</div>
-                <span class="cert-issuer-name">TRYHACKME</span>
-              </div>
-              <div class="cert-name">DevSecOps</div>
-            </div>
-            <div class="cert-front-bar"></div>
-            <div class="cert-hint">flip for credential &rsaquo;</div>
-          </div>
-          <div class="cert-back">
-            <div>
-              <div class="cert-back-label">// CREDENTIAL ID</div>
-              <div class="cert-back-id">THM-VNTIREBPOK</div>
-            </div>
-            <div class="cert-back-footer">
-              <span class="cert-back-valid">Apr 2026 · Apr 2029</span>
-              <span class="cert-verified">ACTIVE</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
+
 
 <section id="contact" style="border-bottom:none;">
   <div class="wrap">
