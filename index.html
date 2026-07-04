@@ -457,7 +457,7 @@
       <a href="#about">about</a><span>/</span>
       <a href="#experience">experience</a><span>/</span>
       <a href="#education">education</a><span>/</span>
-      <a href="#projects">security ops</a><span>/</span>
+      <a href="#sec-ops">security ops</a><span>/</span>
       <a href="#certs">certs</a><span>/</span>
       <a href="#contact">contact</a>
     </div>
@@ -477,7 +477,7 @@
     </div>
     <div class="cta-row">
       <a href="#contact" class="btn">Get in touch</a>
-      <a href="#projects" class="btn ghost">Try security ops</a>
+      <a href="#sec-ops" class="btn ghost">Try security ops</a>
     </div>
 
     <div class="terminal" id="terminal">
@@ -668,7 +668,7 @@
   </div>
 </section>
 
-<section id="projects">
+<section id="sec-ops">
   <div class="wrap">
     <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">security operations</span><span class="sec-line"></span></div>
 
@@ -807,6 +807,9 @@ const commands = {
   <span class="term-hl">whoami</span>       who I am
   <span class="term-hl">ls</span>           list directory
   <span class="term-hl">cat cv.txt</span>   view quick CV summary
+  <span class="term-hl">cat thesis.pdf</span> view MSc thesis abstract
+  <span class="term-hl">cat README.md</span> about this terminal
+  <span class="term-hl">projects</span>     list pinned GitHub repos
   <span class="term-hl">skills</span>       core technical stack
   <span class="term-hl">uname</span>        system info
   <span class="term-hl">uptime</span>       how long I have been running
@@ -815,7 +818,7 @@ const commands = {
   <span class="term-hl">open github</span>  open GitHub profile
   <span class="term-hl">open linkedin</span> open LinkedIn profile
   <span class="term-hl">experience</span>   jump to work history
-  <span class="term-hl">projects</span>     jump to security ops
+  <span class="term-hl">sec-ops</span>      jump to security operations
   <span class="term-hl">certs</span>        jump to certifications
   <span class="term-hl">contact</span>      jump to contact section
   <span class="term-hl">sudo</span>         try it
@@ -851,6 +854,27 @@ CERTS
   TryHackMe: Jr Pen Tester       (THM-3KMQKNH1E2)
   TryHackMe: DevSecOps           (THM-VNTIREBPOK)
   NIIT: Diploma in Java Technologies`,
+
+  'cat thesis.pdf': ()=>`Device-as-Detector: Lightweight Energy-Based Detection
+of WiFi Deauthentication Attacks on Constrained IoT Devices
+
+MSc Thesis, Aalto University x Técnico Lisboa (2026)
+
+Abstract:
+Explores energy-based side-channel current analysis,
+using an Arduino Uno with an INA219 current sensor,
+combined with a lightweight TinyML decision tree
+(0.920 F1, 4.08 KB on-device) to detect WiFi
+deauthentication attacks on resource-constrained
+IoT hardware, without requiring network-stack
+visibility. Two related papers are currently
+under review at IEEE CSCN 2026.`,
+
+  'cat readme.md': ()=>`# samuel@helsinki terminal
+
+A small interactive terminal built into this portfolio.
+Type <span class="term-hl">help</span> to see available commands,
+or just explore, most things here actually do something.`,
 
   skills: ()=>`Cloud / Identity : Entra ID, Azure AD, M365, SSO
 Offensive Sec   : Burp Suite, Nmap, Metasploit, Kali, Aircrack-ng
@@ -901,7 +925,17 @@ sudo: 3 incorrect password attempts
 <span style="color:#ff5f56">Access denied. Nice try.</span>`,
 
   experience: ()=> { document.getElementById('experience').scrollIntoView({behavior:'smooth'}); return 'cd experience/'; },
-  projects: ()=> { document.getElementById('projects').scrollIntoView({behavior:'smooth'}); return 'cd security-ops/'; },
+  'sec-ops': ()=> { document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'}); return 'cd security-ops/'; },
+  projects: ()=>`Fetching pinned repositories from github.com/samuelHenris...
+
+<a href="https://github.com/samuelHenris/SecRAG" target="_blank" style="color:var(--teal)">SecRAG</a>                        Self-hosted, security-hardened RAG pipeline for data-sovereign analysis
+<a href="https://github.com/samuelHenris/CodeSentinel" target="_blank" style="color:var(--teal)">CodeSentinel</a>                  AI-powered GitHub Action for automated PR vulnerability scanning
+<a href="https://github.com/samuelHenris/SQL-Injection-Vulnerability-Scanner" target="_blank" style="color:var(--teal)">SQL-Injection-Vulnerability-Scanner</a> Error-based SQLi scanner with an authorization gate
+<a href="https://github.com/samuelHenris/Network-Scanner" target="_blank" style="color:var(--teal)">Network-Scanner</a>               ARP-based network host discovery tool
+<a href="https://github.com/samuelHenris/Keylogger" target="_blank" style="color:var(--teal)">Keylogger</a>                      Keystroke-capture lab reframed as a detection-engineering exercise
+<a href="https://github.com/samuelHenris/Sigma-Detection-Engineering" target="_blank" style="color:var(--teal)">Sigma-Detection-Engineering</a>   ATT&CK-mapped Sigma detection rules across 6 techniques
+
+Type <span class="term-hl">open github</span> to view the full profile.`,
   certs: ()=> { document.getElementById('certs').scrollIntoView({behavior:'smooth'}); return 'cd certifications/'; },
   contact: ()=> { document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return 'cd contact/'; },
   clear: ()=> { termBody.innerHTML=''; return null; },
