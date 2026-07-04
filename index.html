@@ -491,7 +491,7 @@
         <div class="term-line">Welcome. Type <span class="term-hl">help</span> to see what this terminal can do.</div>
       </div>
       <div class="term-input-row">
-        <span class="term-prompt">$</span>
+        <span class="term-prompt" id="termPrompt">$</span>
         <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command…">
       </div>
     </div>
@@ -918,12 +918,6 @@ Nmap done: 1 host up, 3 open ports
   'open github': ()=>{ window.open('https://github.com/samuelHenris','_blank'); return 'Opening github.com/samuelHenris...'; },
   'open linkedin': ()=>{ window.open('https://linkedin.com/in/samuelhenria','_blank'); return 'Opening linkedin.com/in/samuelhenria...'; },
 
-  sudo: ()=>`[sudo] password for visitor: 
-Sorry, try again.
-[sudo] password for visitor:
-sudo: 3 incorrect password attempts
-<span style="color:#ff5f56">Access denied. Nice try.</span>`,
-
   experience: ()=> { document.getElementById('experience').scrollIntoView({behavior:'smooth'}); return 'cd experience/'; },
   'sec-ops': ()=> { document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'}); return 'cd security-ops/'; },
   projects: ()=>`Fetching pinned repositories from github.com/samuelHenris...
@@ -950,17 +944,60 @@ Error: coffee module not found in /usr/bin
 <span style="color:var(--amber)">Running on pure curiosity instead.</span>`
 };
 
+const termPrompt = document.getElementById('termPrompt');
+let sudoMode = false;
+
+const sudoTaunts = [
+  "Nope. Not even close. I guess you don't have it. Hehe, bye!",
+  "That's a hard no. Nice try though. Hehe, bye!",
+  "Access denied. I guess you don't have it. Hehe, bye!",
+  "Wrong. This isn't that kind of portfolio. Hehe, bye!"
+];
+
 termInput.addEventListener('keydown', (e)=>{
   if(e.key !== 'Enter') return;
-  const raw = termInput.value.trim();
-  if(!raw) return;
-  printLine(raw, 'cmd');
-  const key = raw.toLowerCase();
+  const raw = termInput.value;
+
+  if(sudoMode){
+    const masked = '•'.repeat(Math.max(raw.trim().length, 1));
+    printLine(masked, 'cmd');
+    termInput.value = '';
+    termInput.type = 'text';
+    termInput.placeholder = 'type a command…';
+    termPrompt.textContent = '$';
+    sudoMode = false;
+
+    printLine('Checking credentials...');
+    setTimeout(()=>{
+      const taunt = sudoTaunts[Math.floor(Math.random()*sudoTaunts.length)];
+      printLine(`<span style="color:#ff5f56">${taunt}</span>`);
+      setTimeout(()=>{
+        printLine('--- session restored, back to normal ---');
+      }, 2200);
+    }, 700);
+    return;
+  }
+
+  const trimmed = raw.trim();
+  if(!trimmed) return;
+  printLine(trimmed, 'cmd');
+  const key = trimmed.toLowerCase();
+
+  if(key === 'sudo'){
+    sudoMode = true;
+    termInput.type = 'password';
+    termInput.placeholder = '';
+    termPrompt.textContent = '[sudo] password for visitor:';
+    printLine('[sudo] password for visitor:');
+    termInput.value = '';
+    return;
+  }
+
   if(commands[key]){
     const out = commands[key]();
     if(out) printLine(out);
   } else {
-    printLine(`command not found: ${raw}. type <span class="term-hl">help</span>`);
+    printLine(`command not found: ${trimmed}. type <span class="term-hl">help</span>`);
   }
   termInput.value = '';
 });
