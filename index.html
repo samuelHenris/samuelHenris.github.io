@@ -16,8 +16,10 @@
     --muted:#8694a3;
     --teal:#56e6c9;
     --amber:#f0a64d;
+    --red:#ff6b6b;
     --teal-dim:rgba(86,230,201,0.12);
     --amber-dim:rgba(240,166,77,0.12);
+    --red-dim:rgba(255,107,107,0.12);
     --mono:'IBM Plex Mono', monospace;
     --sans:'Inter', sans-serif;
   }
@@ -237,6 +239,7 @@
   .sec-num{font-family:var(--mono);color:var(--amber);font-size:13px;}
   .sec-title{font-family:var(--mono);font-size:22px;font-weight:600;}
   .sec-line{flex:1;height:1px;background:var(--line);}
+  .sec-sub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:-30px;margin-bottom:36px;}
 
   /* ABOUT */
   .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;}
@@ -279,20 +282,93 @@
   .tag{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:3px;}
   @media (max-width:600px){.tl-item{grid-template-columns:1fr;gap:6px;}}
 
-  /* PROJECTS */
-  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  @media (max-width:700px){.proj-grid{grid-template-columns:1fr;}}
-  .proj-card{
+  /* PLAYGROUND (replaces old project cards) */
+  .pg-tabs{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap;}
+  .pg-tab{
+    font-family:var(--mono);font-size:12.5px;color:var(--muted);
     background:var(--surface);border:1px solid var(--line);border-radius:6px;
-    padding:26px;transition:border-color .2s, transform .2s;
+    padding:10px 16px;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;gap:8px;
   }
-  .proj-card:hover{border-color:var(--teal);transform:translateY(-2px);}
-  .proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
-  .proj-name{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--teal);}
-  .proj-link{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:3px;}
-  .proj-link:hover{color:var(--amber);border-color:var(--amber);}
-  .proj-desc{color:var(--muted);font-size:14px;margin-bottom:14px;}
-  .proj-tags{display:flex;flex-wrap:wrap;gap:7px;}
+  .pg-tab:hover{border-color:var(--teal);color:var(--teal);}
+  .pg-tab.active{background:var(--teal-dim);border-color:var(--teal);color:var(--teal);}
+  .pg-tab .pg-tab-num{font-size:10.5px;color:var(--amber);}
+
+  .pg-intro{color:var(--muted);font-size:14.5px;margin-bottom:26px;max-width:620px;}
+  .pg-panel{display:none;}
+  .pg-panel.active{display:block;}
+
+  /* module 1: GDPR breach notification assessor */
+  .gdpr-frame{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .gdpr-progress{display:flex;gap:6px;padding:16px 22px 0;}
+  .gdpr-progress .seg{flex:1;height:3px;border-radius:2px;background:var(--line);}
+  .gdpr-progress .seg.done{background:var(--teal);}
+  .gdpr-body{padding:22px;}
+  .gdpr-step-label{font-family:var(--mono);font-size:10.5px;color:var(--amber);letter-spacing:0.05em;margin-bottom:10px;}
+  .gdpr-question{font-size:15px;font-weight:600;margin-bottom:8px;}
+  .gdpr-question-sub{color:var(--muted);font-size:13px;margin-bottom:18px;max-width:520px;}
+  .gdpr-options{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .gdpr-opt{
+    font-family:var(--mono);font-size:12.5px;color:var(--text);
+    background:var(--bg);border:1px solid var(--line);border-radius:6px;
+    padding:11px 18px;cursor:pointer;transition:all .2s;
+  }
+  .gdpr-opt:hover{border-color:var(--teal);color:var(--teal);}
+  .gdpr-back{font-family:var(--mono);font-size:11.5px;color:var(--muted);cursor:pointer;margin-top:14px;display:inline-block;}
+  .gdpr-back:hover{color:var(--amber);}
+  .gdpr-result{padding:4px 0 2px;}
+  .gdpr-verdict{
+    font-family:var(--mono);font-size:16px;font-weight:600;padding:14px 16px;border-radius:6px;margin-bottom:16px;
+  }
+  .gdpr-verdict.notify{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,107,107,0.3);}
+  .gdpr-verdict.notify-both{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,107,107,0.3);}
+  .gdpr-verdict.no-notify{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(86,230,201,0.3);}
+  .gdpr-reasoning{color:var(--muted);font-size:13.5px;margin-bottom:16px;line-height:1.7;}
+  .gdpr-reasoning strong{color:var(--text);}
+  .gdpr-refs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .gdpr-ref-tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:3px;}
+  .gdpr-restart{
+    font-family:var(--mono);font-size:12px;color:var(--bg);background:var(--teal);
+    border:none;border-radius:4px;padding:9px 16px;cursor:pointer;
+  }
+
+  /* module 2: phishing analyzer */
+  .mail-picker{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+  .mail-btn{
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    padding:9px 14px;cursor:pointer;transition:all .2s;
+  }
+  .mail-btn:hover{border-color:var(--amber);color:var(--amber);}
+  .mail-btn.active{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+
+  .mail-view{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .mail-headers{padding:16px 20px;border-bottom:1px solid var(--line);font-size:13px;}
+  .mail-headers .row{display:flex;gap:10px;margin-bottom:6px;}
+  .mail-headers .k{font-family:var(--mono);font-size:11px;color:var(--muted);width:70px;flex-shrink:0;padding-top:2px;}
+  .mail-headers .v{font-size:13px;}
+  .mail-body{padding:18px 20px;font-size:13.5px;color:var(--muted);line-height:1.7;}
+  .flag-span{
+    background:var(--red-dim);color:var(--red);border-bottom:1px dashed var(--red);
+    padding:1px 3px;border-radius:2px;cursor:help;position:relative;
+  }
+  .flag-span .log-tip{width:230px;}
+  .scan-row{padding:14px 20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .decision-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .decision-prompt{font-family:var(--mono);font-size:12.5px;color:var(--muted);}
+  .decision-btns{display:flex;gap:10px;}
+  .scan-btn{
+    font-family:var(--mono);font-size:12px;color:var(--bg);background:var(--teal);
+    border:1px solid var(--teal);border-radius:4px;padding:9px 16px;cursor:pointer;transition:all .2s;
+  }
+  .scan-btn:hover{background:transparent;color:var(--teal);}
+  .scan-btn.ghost{background:transparent;color:var(--text);border-color:var(--line);}
+  .scan-btn.ghost:hover{border-color:var(--amber);color:var(--amber);}
+  .verdict{font-family:var(--mono);font-size:12.5px;font-weight:600;}
+  .verdict.safe{color:var(--teal);}
+  .verdict.suspicious{color:var(--amber);}
+  .verdict.phishing{color:var(--red);}
+  .risk-meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;}
 
   /* CERTS */
   .cert-log{
@@ -381,7 +457,7 @@
       <a href="#about">about</a><span>/</span>
       <a href="#experience">experience</a><span>/</span>
       <a href="#education">education</a><span>/</span>
-      <a href="#projects">projects</a><span>/</span>
+      <a href="#projects">security ops</a><span>/</span>
       <a href="#certs">certs</a><span>/</span>
       <a href="#contact">contact</a>
     </div>
@@ -401,7 +477,7 @@
     </div>
     <div class="cta-row">
       <a href="#contact" class="btn">Get in touch</a>
-      <a href="#projects" class="btn ghost">View projects</a>
+      <a href="#projects" class="btn ghost">Try security ops</a>
     </div>
 
     <div class="terminal" id="terminal">
@@ -594,39 +670,23 @@
 
 <section id="projects">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">projects</span><span class="sec-line"></span></div>
-    <div class="proj-grid reveal">
-      <div class="proj-card">
-        <div class="proj-top">
-          <span class="proj-name">SecRAG</span>
-          <a href="https://github.com/samuelHenris" class="proj-link">github →</a>
-        </div>
-        <p class="proj-desc">Self-hosted RAG security pipeline built for data sovereignty. Lets security teams run retrieval-augmented analysis on sensitive data without it leaving their infrastructure.</p>
-        <div class="proj-tags"><span class="tag">FastAPI</span><span class="tag">LangChain</span><span class="tag">FAISS</span><span class="tag">Gemini 2.0</span><span class="tag">Docker</span><span class="tag">Kubernetes</span></div>
+    <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">security operations</span><span class="sec-line"></span></div>
+
+    <div class="reveal">
+      <div class="pg-tabs">
+        <button class="pg-tab active" data-panel="gdpr"><span class="pg-tab-num">01</span> assess: GDPR breach notification</button>
+        <button class="pg-tab" data-panel="analyze"><span class="pg-tab-num">02</span> analyze a phishing email</button>
       </div>
-      <div class="proj-card">
-        <div class="proj-top">
-          <span class="proj-name">CodeSentinel</span>
-          <a href="https://github.com/samuelHenris" class="proj-link">github →</a>
-        </div>
-        <p class="proj-desc">AI-powered GitHub Action that scans pull requests for vulnerabilities automatically, catching security issues before they merge into main.</p>
-        <div class="proj-tags"><span class="tag">GitHub Actions</span><span class="tag">AI/LLM</span><span class="tag">DevSecOps</span></div>
+
+      <!-- MODULE 1: GDPR BREACH NOTIFICATION ASSESSOR -->
+      <div class="pg-panel active" id="panel-gdpr">
+        <div class="gdpr-frame" id="gdprFrame"></div>
       </div>
-      <div class="proj-card">
-        <div class="proj-top">
-          <span class="proj-name">Device-as-Detector</span>
-          <span class="proj-link">MSc Thesis</span>
-        </div>
-        <p class="proj-desc">Lightweight energy-based detection of WiFi deauthentication attacks on constrained IoT devices, using side-channel current analysis and TinyML. No network stack visibility required.</p>
-        <div class="proj-tags"><span class="tag">TinyML</span><span class="tag">IoT Security</span><span class="tag">Side-channel</span></div>
-      </div>
-      <div class="proj-card">
-        <div class="proj-top">
-          <span class="proj-name">Data Visualization Portfolio</span>
-          <a href="https://public.tableau.com/app/profile/samuel.henry6444/vizzes" class="proj-link">tableau →</a>
-        </div>
-        <p class="proj-desc">Public Tableau dashboards covering homicide data analysis, British Airways customer review averages, and a Netflix content visualization.</p>
-        <div class="proj-tags"><span class="tag">Tableau</span><span class="tag">Python</span><span class="tag">Data Viz</span></div>
+
+      <!-- MODULE 2: PHISHING ANALYZER -->
+      <div class="pg-panel" id="panel-analyze">
+        <div class="mail-picker" id="mailPicker"></div>
+        <div class="mail-view" id="mailView"></div>
       </div>
     </div>
   </div>
@@ -755,7 +815,7 @@ const commands = {
   <span class="term-hl">open github</span>  open GitHub profile
   <span class="term-hl">open linkedin</span> open LinkedIn profile
   <span class="term-hl">experience</span>   jump to work history
-  <span class="term-hl">projects</span>     jump to projects
+  <span class="term-hl">projects</span>     jump to security ops
   <span class="term-hl">certs</span>        jump to certifications
   <span class="term-hl">contact</span>      jump to contact section
   <span class="term-hl">sudo</span>         try it
@@ -767,14 +827,14 @@ Location: Helsinki, FI
 Focus   : Identity, Endpoint, Offensive Security
 Status  : <span style="color:#27c93f">open to work</span>`,
 
-  ls: ()=> `drwxr-xr-x  projects/
+  ls: ()=> `drwxr-xr-x  security-ops/
 drwxr-xr-x  certifications/
 drwxr-xr-x  experience/
 -rw-r--r--  cv.txt
 -rw-r--r--  thesis.pdf
 -rw-r--r--  README.md`,
 
-  'cat cv.txt': ()=>`Samuel Henry A. — IT & Security Engineer
+  'cat cv.txt': ()=>`Samuel Henry A., IT & Security Engineer
 Helsinki, FI · abiolahenrys@gmail.com
 
 EDUCATION
@@ -782,9 +842,9 @@ EDUCATION
   BSc  Software Engineering, West Ukrainian National University
 
 RECENT ROLES
-  Independent Security Contractor — A2F Consulting LLC
-  IT Specialist & SysAdmin       — A2F Consulting LLC
-  Web Admin & IT Support Intern  — West Ukrainian National University
+  Independent Security Contractor, A2F Consulting LLC
+  IT Specialist & SysAdmin,       A2F Consulting LLC
+  Web Admin & IT Support Intern,  West Ukrainian National University
 
 CERTS
   TryHackMe: Security Engineer   (THM-IRZ4FTXLEF)
@@ -841,7 +901,7 @@ sudo: 3 incorrect password attempts
 <span style="color:#ff5f56">Access denied. Nice try.</span>`,
 
   experience: ()=> { document.getElementById('experience').scrollIntoView({behavior:'smooth'}); return 'cd experience/'; },
-  projects: ()=> { document.getElementById('projects').scrollIntoView({behavior:'smooth'}); return 'cd projects/'; },
+  projects: ()=> { document.getElementById('projects').scrollIntoView({behavior:'smooth'}); return 'cd security-ops/'; },
   certs: ()=> { document.getElementById('certs').scrollIntoView({behavior:'smooth'}); return 'cd certifications/'; },
   contact: ()=> { document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return 'cd contact/'; },
   clear: ()=> { termBody.innerHTML=''; return null; },
@@ -928,6 +988,264 @@ document.querySelectorAll('.contact-card[data-copy]').forEach(card=>{
   });
 });
 
+/* ================= SECURITY OPERATIONS PLAYGROUND ================= */
+
+// tab switching
+document.querySelectorAll('.pg-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.pg-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.pg-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+  });
+});
+
+/* ---- MODULE 1: GDPR BREACH NOTIFICATION ASSESSOR ---- */
+// Decision tree modeled on GDPR Articles 33-34, cross-referenced with
+// ISO/IEC 27001:2022 Annex A control A.5.24 (incident management planning)
+// and ENISA/NSA-aligned breach-response guidance.
+const gdprSteps = {
+  start: {
+    label: 'STEP 1 / 4',
+    q: 'Did the incident involve personal data?',
+    sub: 'Personal data means any information relating to an identified or identifiable natural person (GDPR Art. 4(1)): names, emails, IPs, employee or customer records, etc.',
+    opts: [
+      {label: 'Yes', next: 'confidentiality'},
+      {label: 'No / unsure', next: 'result_no_pd'}
+    ]
+  },
+  confidentiality: {
+    label: 'STEP 2 / 4',
+    q: 'Was personal data actually accessed, altered, disclosed, or lost by an unauthorized party?',
+    sub: 'This is the core test in GDPR Art. 4(12): a breach requires accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, personal data.',
+    opts: [
+      {label: 'Yes, confirmed', next: 'risk'},
+      {label: 'Not confirmed / contained before access', next: 'result_no_breach'}
+    ]
+  },
+  risk: {
+    label: 'STEP 3 / 4',
+    q: 'Is it likely to result in a risk to the rights and freedoms of the affected individuals?',
+    sub: 'Consider: type of data (e.g. financial, health, credentials), volume of records, and whether the data was encrypted. Art. 33(1) only requires notification where a risk is likely.',
+    opts: [
+      {label: 'Unlikely to result in any risk', next: 'result_no_notify'},
+      {label: 'Likely, but risk is limited', next: 'result_notify_dpa'},
+      {label: 'Likely to be a high risk', next: 'result_notify_both'}
+    ]
+  }
+};
+
+const gdprResults = {
+  result_no_pd: {
+    verdict: 'No GDPR notification required', cls: 'no-notify',
+    reasoning: 'GDPR breach-notification duties only apply to personal data (Art. 4(1), Art. 33). Without personal data involved, this falls outside GDPR\'s notification scope, though it may still warrant internal incident handling under general information-security policy.',
+    refs: ['GDPR: no personal data in scope', 'ISO/IEC 27001 A.5.24 (still log and review internally)']
+  },
+  result_no_breach: {
+    verdict: 'No GDPR notification required', cls: 'no-notify',
+    reasoning: 'Without confirmed unauthorized access, alteration, or loss (GDPR Art. 4(12)), this does not meet the legal definition of a personal data breach. Document the near-miss and the containment steps taken. This record matters if the facts change on further investigation.',
+    refs: ['GDPR Art. 4(12): breach definition not met', 'ISO/IEC 27001 A.5.24: document as a near-miss']
+  },
+  result_no_notify: {
+    verdict: 'No notification required (document the decision)', cls: 'no-notify',
+    reasoning: 'GDPR Art. 33(1) exempts breaches "unlikely to result in a risk to the rights and freedoms of natural persons." You must still record every breach internally (Art. 33(5)), including the facts, effects, and remedial action, even when notification isn\'t required. Regulators can ask to see this record.',
+    refs: ['GDPR Art. 33(1) exemption', 'GDPR Art. 33(5): internal record still mandatory', 'ISO/IEC 27001 A.5.24']
+  },
+  result_notify_dpa: {
+    verdict: 'Notify the supervisory authority within 72 hours', cls: 'notify',
+    reasoning: 'GDPR Art. 33(1) requires notifying the relevant supervisory authority (in Finland, the Office of the Data Protection Ombudsman) within 72 hours of becoming aware of the breach, unless unlikely to result in risk. Since a risk exists here even if limited, notification to the authority is required; notifying affected individuals directly is not mandatory at this risk level (Art. 34) but may still be good practice.',
+    refs: ['GDPR Art. 33: 72-hour authority notification', 'ISO/IEC 27001 A.5.24 / A.5.30', 'NSA/CISA breach-response guidance: timely reporting reduces downstream harm']
+  },
+  result_notify_both: {
+    verdict: 'Notify the authority AND affected individuals', cls: 'notify-both',
+    reasoning: 'Where a breach is likely to result in a high risk to individuals\' rights and freedoms (e.g. exposed credentials, financial, or health data), GDPR Art. 34 requires notifying the affected individuals directly, in addition to the 72-hour supervisory authority notification under Art. 33. Communication to individuals must be in clear, plain language describing the nature of the breach and recommended protective steps.',
+    refs: ['GDPR Art. 33: 72-hour authority notification', 'GDPR Art. 34: direct notification to individuals', 'ISO/IEC 27001 A.5.24: incident response plan invoked']
+  }
+};
+
+const gdprFrame = document.getElementById('gdprFrame');
+let gdprHistory = ['start'];
+
+function renderGdprStep(){
+  const key = gdprHistory[gdprHistory.length - 1];
+  const doneCount = gdprHistory.length - 1;
+  const progressHtml = [0,1,2].map(i=>`<div class="seg${i < doneCount ? ' done' : ''}"></div>`).join('');
+
+  if(gdprResults[key]){
+    const r = gdprResults[key];
+    gdprFrame.innerHTML = `
+      <div class="gdpr-progress">${[0,1,2].map(()=>'<div class="seg done"></div>').join('')}</div>
+      <div class="gdpr-body">
+        <div class="gdpr-result">
+          <div class="gdpr-verdict ${r.cls}">${r.verdict}</div>
+          <div class="gdpr-reasoning">${r.reasoning}</div>
+          <div class="gdpr-refs">${r.refs.map(x=>`<span class="gdpr-ref-tag">${x}</span>`).join('')}</div>
+          <button class="gdpr-restart" onclick="gdprRestart()">Start over with a different scenario</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const s = gdprSteps[key];
+  const optsHtml = s.opts.map(o=>`<button class="gdpr-opt" onclick="gdprAnswer('${o.next}')">${o.label}</button>`).join('');
+  const backHtml = gdprHistory.length > 1 ? `<span class="gdpr-back" onclick="gdprBack()">← back</span>` : '';
+  gdprFrame.innerHTML = `
+    <div class="gdpr-progress">${progressHtml}</div>
+    <div class="gdpr-body">
+      <div class="gdpr-step-label">${s.label}</div>
+      <div class="gdpr-question">${s.q}</div>
+      <div class="gdpr-question-sub">${s.sub}</div>
+      <div class="gdpr-options">${optsHtml}</div>
+      ${backHtml}
+    </div>`;
+}
+
+window.gdprAnswer = function(next){
+  gdprHistory.push(next);
+  renderGdprStep();
+};
+window.gdprBack = function(){
+  if(gdprHistory.length > 1) gdprHistory.pop();
+  renderGdprStep();
+};
+window.gdprRestart = function(){
+  gdprHistory = ['start'];
+  renderGdprStep();
+};
+renderGdprStep();
+
+/* ---- MODULE 2: PHISHING RED-FLAG ANALYZER ---- */
+const phishSamples = [
+  {
+    name: 'IT Helpdesk Reset',
+    subject: 'URGENT: Your password expires in 2 hours',
+    fromName: 'IT Helpdesk Support',
+    fromAddr: 'it-helpdesk@corp-security-alerts.com',
+    replyTo: 'noreply@mail-relay-svc.ru',
+    linkText: 'Reset your password now',
+    linkHref: 'http://corp-secure-login.info/reset',
+    body: [
+      {text: 'Dear User,\n\n', flag:false},
+      {text: 'Your account password will expire in 2 hours', flag:true, reason:'Manufactured urgency pressures the reader into acting before checking whether the request is real. Listed as a core phishing indicator in CISA\'s phishing guidance.'},
+      {text: ' and you will lose access to email and shared drives. ', flag:false},
+      {text: 'Click here to reset your password now', flag:true, reason:'Link text says "reset your password" but points to corp-secure-login.info, a domain unrelated to the real IT system.'},
+      {text: ' before access is suspended.\n\nIT Helpdesk Team', flag:false}
+    ],
+    verdict: 'phishing',
+    verdictNote: 'Sender domain, reply-to, and link destination are all unrelated to the real company domain, combined with urgency language designed to short-circuit careful reading.',
+    refs: ['CISA phishing indicators: urgency + mismatched links', 'ISO/IEC 27001 A.6.3: security awareness training scenario', 'If credentials entered: GDPR Art. 33 breach notification may apply']
+  },
+  {
+    name: 'Vendor Invoice',
+    subject: 'Invoice #48213: Payment overdue',
+    fromName: 'Accounts Receivable',
+    fromAddr: 'billing@vendor-supply-co.com',
+    replyTo: 'billing@vendor-supp1y-co.com',
+    linkText: 'View invoice',
+    linkHref: 'http://vendor-supp1y-co.com/invoice.exe',
+    body: [
+      {text: 'Hello,\n\nPlease find attached invoice #48213, now overdue. ', flag:false},
+      {text: 'View invoice', flag:true, reason:'Link points to a file ending in .exe, not a document. Invoices should never be executables.'},
+      {text: ' to review and process payment immediately. ', flag:false},
+      {text: 'Note our updated reply address: billing@vendor-supp1y-co.com', flag:true, reason:'Reply-to domain uses the digit "1" in place of the letter "l", a lookalike domain designed to pass a quick visual check.'},
+      {text: '\n\nAccounts Receivable', flag:false}
+    ],
+    verdict: 'phishing',
+    verdictNote: 'Lookalike domain in the reply-to address plus an executable disguised as an invoice link: two independent strong indicators.',
+    refs: ['CISA phishing indicators: lookalike domain, executable attachment', 'ISO/IEC 27001 A.5.24: incident response if executed', 'NSA guidance: verify payment changes out-of-band']
+  },
+  {
+    name: 'Newsletter Signup',
+    subject: 'Confirm your subscription to Nordic DevOps Weekly',
+    fromName: 'Nordic DevOps Weekly',
+    fromAddr: 'newsletter@nordicdevops.fi',
+    replyTo: 'newsletter@nordicdevops.fi',
+    linkText: 'Confirm subscription',
+    linkHref: 'https://nordicdevops.fi/confirm?id=88213',
+    body: [
+      {text: 'Hi,\n\nThanks for signing up to Nordic DevOps Weekly. ', flag:false},
+      {text: 'Confirm subscription', flag:false},
+      {text: ' to start receiving our Tuesday newsletter. If you did not request this, you can safely ignore this email.\n\nSee you Tuesday,\nThe Nordic DevOps Weekly Team', flag:false}
+    ],
+    verdict: 'safe',
+    verdictNote: 'Sender, reply-to, and link domain all match consistently, no urgency pressure, and the link goes to a plausible, matching path.',
+    refs: ['CISA phishing indicators: none present', 'Consistent domain across From / Reply-To / link']
+  }
+];
+
+const mailPicker = document.getElementById('mailPicker');
+const mailView = document.getElementById('mailView');
+let userAnswers = {};
+
+function renderMail(idx){
+  document.querySelectorAll('.mail-btn').forEach((b,i)=>b.classList.toggle('active', i===idx));
+  const m = phishSamples[idx];
+  const answer = userAnswers[idx];
+  const answered = typeof answer !== 'undefined';
+
+  const bodyHtml = m.body.map(seg=>{
+    if(seg.flag && answered){
+      return `<span class="flag-span">${seg.text}<span class="log-tip">${seg.reason}</span></span>`;
+    }
+    return seg.text.replace(/\n/g,'<br>');
+  }).join('');
+
+  const flagCount = m.body.filter(s=>s.flag).length;
+  let verdictHtml = '';
+
+  if(answered){
+    const correct = answer === m.verdict;
+    const actualLabel = m.verdict === 'safe' ? 'not phishing, it is legitimate' : 'phishing';
+    const cls = correct ? 'safe' : 'phishing';
+    const headline = correct
+      ? `You're correct, this is${m.verdict === 'safe' ? ' not' : ''} phishing.`
+      : `Not quite. This is actually ${actualLabel}.`;
+    const refsHtml = m.refs.map(r=>`<span class="gdpr-ref-tag">${r}</span>`).join('');
+    verdictHtml = `
+      <div>
+        <span class="verdict ${cls}">${headline}</span>
+        <div class="risk-meta">${flagCount} red flag${flagCount===1?'':'s'} found. ${m.verdictNote}</div>
+        <div class="gdpr-refs" style="margin-top:10px;">${refsHtml}</div>
+        <button class="gdpr-back" style="margin-top:10px;" onclick="resetMailAnswer(${idx})">Try again</button>
+      </div>`;
+  } else {
+    verdictHtml = `
+      <div class="decision-row">
+        <span class="decision-prompt">Is this email phishing?</span>
+        <div class="decision-btns">
+          <button class="scan-btn" onclick="chooseMail(${idx}, 'phishing')">Phishing</button>
+          <button class="scan-btn ghost" onclick="chooseMail(${idx}, 'safe')">Not phishing</button>
+        </div>
+      </div>`;
+  }
+
+  mailView.innerHTML = `
+    <div class="mail-headers">
+      <div class="row"><span class="k">FROM</span><span class="v">${m.fromName} &lt;${m.fromAddr}&gt;</span></div>
+      <div class="row"><span class="k">REPLY-TO</span><span class="v">${m.replyTo}</span></div>
+      <div class="row"><span class="k">SUBJECT</span><span class="v">${m.subject}</span></div>
+    </div>
+    <div class="mail-body">${bodyHtml}</div>
+    <div class="scan-row">${verdictHtml}</div>`;
+}
+
+window.chooseMail = function(idx, choice){
+  userAnswers[idx] = choice;
+  renderMail(idx);
+};
+window.resetMailAnswer = function(idx){
+  delete userAnswers[idx];
+  renderMail(idx);
+};
+
+phishSamples.forEach((m,i)=>{
+  const btn = document.createElement('button');
+  btn.className = 'mail-btn' + (i===0 ? ' active' : '');
+  btn.textContent = m.name;
+  btn.addEventListener('click', ()=> renderMail(i));
+  mailPicker.appendChild(btn);
+});
+renderMail(0);
 
 </script>
 </body>
