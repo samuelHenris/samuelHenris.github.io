@@ -20,6 +20,8 @@
     --teal-dim:rgba(86,230,201,0.12);
     --amber-dim:rgba(240,166,77,0.12);
     --red-dim:rgba(255,107,107,0.12);
+    --sky:#5ec3f0;
+    --violet:#b39ddb;
     --mono:'IBM Plex Mono', monospace;
     --sans:'Inter', sans-serif;
   }
@@ -249,23 +251,48 @@
   .skills-panel{
     background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px;
   }
-  .skills-panel h4{font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:0.05em;margin-bottom:16px;}
-  .skill-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .skills-panel-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;}
+  .skills-panel h4{font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:0.05em;}
+  .skills-total{font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .skills-total b{color:var(--text);}
+  .skill-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px;}
   .filter-pill{
     font-family:var(--mono);font-size:11px;color:var(--muted);
     background:transparent;border:1px solid var(--line);border-radius:14px;
     padding:5px 11px;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;gap:6px;
   }
+  .filter-pill .fp-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+  .filter-pill .fp-count{color:var(--muted);opacity:0.7;}
   .filter-pill:hover{border-color:var(--teal);color:var(--teal);}
   .filter-pill.active{background:var(--teal-dim);border-color:var(--teal);color:var(--teal);}
-  .skill-cloud{display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-cloud{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;}
+  .skill-group-head{
+    flex-basis:100%;display:flex;align-items:center;gap:8px;
+    margin-top:14px;margin-bottom:2px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;color:var(--muted);
+    text-transform:uppercase;
+  }
+  .skill-group-head:first-child{margin-top:0;}
+  .skill-group-head .sg-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+  .skill-group-head .sg-line{flex:1;height:1px;background:var(--line);}
+  .skill-group-head .sg-count{color:var(--line);}
   .skill-pill{
     font-family:var(--mono);font-size:11.5px;color:var(--text);
-    border:1px solid var(--line);border-radius:4px;padding:6px 10px;
+    border:1px solid var(--line);border-left:2px solid var(--line);border-radius:4px;padding:6px 10px;
     transition:all .25s ease;
   }
-  .skill-pill.dim{opacity:0.18;filter:grayscale(1);}
+  .skill-pill.dim{opacity:0.15;filter:grayscale(1);}
   .skill-pill.hl{border-color:var(--amber);color:var(--amber);}
+  .skill-pill[data-cat="cloud"]{border-left-color:var(--sky);}
+  .skill-pill[data-cat="security"]{border-left-color:var(--red);}
+  .skill-pill[data-cat="ir"]{border-left-color:var(--amber);}
+  .skill-pill[data-cat="endpoint"]{border-left-color:var(--violet);}
+  .skill-pill[data-cat="dev"]{border-left-color:var(--teal);}
+  .skill-pill[data-cat="data"]{border-left-color:var(--sky);}
+  .skill-pill[data-cat="infra"]{border-left-color:var(--teal);}
+  .skill-pill[data-cat="ops"]{border-left-color:var(--amber);}
+  .skill-pill[data-cat="qa"]{border-left-color:var(--violet);}
 
   /* EXPERIENCE */
   .timeline{display:flex;flex-direction:column;}
@@ -503,31 +530,41 @@
     <div class="sec-head reveal"><span class="sec-num">01</span><span class="sec-title">about</span><span class="sec-line"></span></div>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>I'm an IT and security engineer based in Helsinki, working at the intersection of <strong>infrastructure administration</strong> and <strong>offensive security</strong>. My background spans Microsoft 365 / Entra ID administration, MDM fleet management, and SSO implementation, alongside penetration testing and vulnerability assessment work.</p>
-        <p>Day to day, I've worked hands-on with <strong>Microsoft Defender</strong> for endpoint and threat visibility, and have working knowledge of <strong>Microsoft Sentinel</strong> for SIEM/SOAR-style detection and investigation.</p>
+        <p>I'm an IT and security engineer based in Helsinki, working at the intersection of <strong>infrastructure administration</strong> and <strong>offensive security</strong>. My background spans Microsoft 365 and Entra ID administration, MDM fleet management, and SSO implementation, alongside penetration testing and vulnerability assessment work.</p>
+        <p>On the infrastructure side, I've administered <strong>Windows Server on Microsoft Azure</strong> across a multi-country environment, handling kernel and security patching, SSL certificate renewal, and system health monitoring with Bash and PowerShell while keeping uptime at 99.9%. I run vulnerability scans and remediate findings to keep secure baselines enforced, and I manage VLANs, DNS, DHCP, and firewall rules across distributed teams. I've also carried 24/7 on-call responsibility, doing root cause analysis and writing runbooks that cut down repeat incidents.</p>
+        <p>I've worked hands-on with <strong>Microsoft Defender</strong> for endpoint and threat visibility, and have working knowledge of <strong>Microsoft Sentinel</strong> for SIEM and SOAR style detection and investigation. On the automation side, I built and deployed a working CI/CD pipeline with GitHub Actions, containerized in Docker, and I'm comfortable with Kubernetes and Ansible for configuration management across multiple servers.</p>
         <p>My MSc thesis, <strong>"Device-as-Detector: Lightweight Energy-Based Detection of WiFi Deauthentication Attacks on Constrained IoT Devices,"</strong> explored energy-based side-channel current analysis combined with TinyML to detect attacks on resource-constrained hardware, bridging embedded systems and network security.</p>
-        <p>I've conducted authorized penetration tests that surfaced critical-severity findings, and I build security tooling on the side, including a self-hosted RAG pipeline for data-sovereign threat analysis and a GitHub Action for automated PR vulnerability scanning.</p>
+        <p>I've conducted authorized penetration tests that surfaced critical-severity findings, and I build security tooling on the side, including a self-hosted RAG pipeline for data-sovereign threat analysis and CodeSentinel, a GitHub Action that automatically scans pull requests for vulnerabilities and hardcoded secrets.</p>
       </div>
       <div class="skills-panel">
-        <h4>// FULL STACK</h4>
+        <div class="skills-panel-head">
+          <h4>// FULL STACK</h4>
+          <span class="skills-total"><b id="skillsTotalNum">0</b> skills logged</span>
+        </div>
         <div class="skill-filters" id="skillFilters">
-          <button class="filter-pill active" data-filter="all">all</button>
-          <button class="filter-pill" data-filter="cloud">cloud & identity</button>
-          <button class="filter-pill" data-filter="security">security</button>
-          <button class="filter-pill" data-filter="ir">incident response</button>
-          <button class="filter-pill" data-filter="endpoint">endpoint / mdm</button>
-          <button class="filter-pill" data-filter="dev">dev</button>
-          <button class="filter-pill" data-filter="data">data / ml</button>
-          <button class="filter-pill" data-filter="infra">infra / devops</button>
-          <button class="filter-pill" data-filter="qa">qa / testing</button>
+          <button class="filter-pill active" data-filter="all"><span class="fp-dot" style="background:var(--text);"></span>all</button>
+          <button class="filter-pill" data-filter="cloud"><span class="fp-dot" style="background:var(--sky);"></span>cloud & identity</button>
+          <button class="filter-pill" data-filter="security"><span class="fp-dot" style="background:var(--red);"></span>security</button>
+          <button class="filter-pill" data-filter="ir"><span class="fp-dot" style="background:var(--amber);"></span>incident response</button>
+          <button class="filter-pill" data-filter="endpoint"><span class="fp-dot" style="background:var(--violet);"></span>endpoint / mdm</button>
+          <button class="filter-pill" data-filter="dev"><span class="fp-dot" style="background:var(--teal);"></span>dev</button>
+          <button class="filter-pill" data-filter="data"><span class="fp-dot" style="background:var(--sky);"></span>data / ml</button>
+          <button class="filter-pill" data-filter="infra"><span class="fp-dot" style="background:var(--teal);"></span>infra / devops</button>
+          <button class="filter-pill" data-filter="ops"><span class="fp-dot" style="background:var(--amber);"></span>operations</button>
+          <button class="filter-pill" data-filter="qa"><span class="fp-dot" style="background:var(--violet);"></span>qa / testing</button>
         </div>
         <div class="skill-cloud" id="skillCloud">
+          <div class="skill-group-head" data-group="cloud"><span class="sg-dot" style="background:var(--sky);"></span>cloud & identity<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="cloud">Microsoft Entra ID</span>
           <span class="skill-pill" data-cat="cloud">Azure AD</span>
           <span class="skill-pill" data-cat="cloud">Office 365 Administration</span>
           <span class="skill-pill" data-cat="cloud">Azure VMs</span>
+          <span class="skill-pill" data-cat="cloud">Windows Server Administration</span>
+          <span class="skill-pill" data-cat="cloud">AWS (self-directed)</span>
           <span class="skill-pill" data-cat="cloud">SSO Implementation</span>
           <span class="skill-pill" data-cat="cloud">API Integrations</span>
+
+          <div class="skill-group-head" data-group="security"><span class="sg-dot" style="background:var(--red);"></span>security<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="security">Microsoft Defender</span>
           <span class="skill-pill" data-cat="security">Microsoft Sentinel</span>
           <span class="skill-pill" data-cat="security">Penetration Testing</span>
@@ -538,7 +575,10 @@
           <span class="skill-pill" data-cat="security">Metasploit</span>
           <span class="skill-pill" data-cat="security">Aircrack-ng</span>
           <span class="skill-pill" data-cat="security">Vulnerability Assessment</span>
+          <span class="skill-pill" data-cat="security">Vulnerability Management</span>
           <span class="skill-pill" data-cat="security">Splunk</span>
+
+          <div class="skill-group-head" data-group="ir"><span class="sg-dot" style="background:var(--amber);"></span>incident response<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="ir">Email Header Analysis</span>
           <span class="skill-pill" data-cat="ir">CyberChef</span>
           <span class="skill-pill" data-cat="ir">ARIN / WHOIS Lookup</span>
@@ -551,30 +591,50 @@
           <span class="skill-pill" data-cat="ir">dmarcian (SPF/DKIM/DMARC)</span>
           <span class="skill-pill" data-cat="ir">IOC Collection</span>
           <span class="skill-pill" data-cat="ir">MITRE ATT&CK</span>
+
+          <div class="skill-group-head" data-group="endpoint"><span class="sg-dot" style="background:var(--violet);"></span>endpoint / mdm<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="endpoint">Mosyle MDM</span>
           <span class="skill-pill" data-cat="endpoint">Munki</span>
           <span class="skill-pill" data-cat="endpoint">AutoPkg</span>
           <span class="skill-pill" data-cat="endpoint">Santa</span>
           <span class="skill-pill" data-cat="endpoint">osquery</span>
+
+          <div class="skill-group-head" data-group="dev"><span class="sg-dot" style="background:var(--teal);"></span>dev<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="dev">Python</span>
           <span class="skill-pill" data-cat="dev">FastAPI</span>
           <span class="skill-pill" data-cat="dev">Flask</span>
           <span class="skill-pill" data-cat="dev">PL/SQL</span>
           <span class="skill-pill" data-cat="dev">Oracle APEX</span>
           <span class="skill-pill" data-cat="dev">Java</span>
+
+          <div class="skill-group-head" data-group="data"><span class="sg-dot" style="background:var(--sky);"></span>data / ml<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="data">TinyML</span>
           <span class="skill-pill" data-cat="data">LangChain</span>
           <span class="skill-pill" data-cat="data">FAISS</span>
           <span class="skill-pill" data-cat="data">SQL</span>
           <span class="skill-pill" data-cat="data">Tableau</span>
           <span class="skill-pill" data-cat="data">Python Data Stack</span>
+
+          <div class="skill-group-head" data-group="infra"><span class="sg-dot" style="background:var(--teal);"></span>infra / devops<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="infra">Docker</span>
           <span class="skill-pill" data-cat="infra">Kubernetes</span>
           <span class="skill-pill" data-cat="infra">GitHub Actions</span>
-          <span class="skill-pill" data-cat="infra">CI/CD</span>
+          <span class="skill-pill" data-cat="infra">CI/CD Pipelines</span>
           <span class="skill-pill" data-cat="infra">Ansible</span>
           <span class="skill-pill" data-cat="infra">Server Management</span>
           <span class="skill-pill" data-cat="infra">SSL Certificate Management</span>
+          <span class="skill-pill" data-cat="infra">PowerShell</span>
+          <span class="skill-pill" data-cat="infra">Bash Scripting</span>
+          <span class="skill-pill" data-cat="infra">VLAN / DNS / DHCP</span>
+          <span class="skill-pill" data-cat="infra">Firewall Configuration</span>
+
+          <div class="skill-group-head" data-group="ops"><span class="sg-dot" style="background:var(--amber);"></span>operations<span class="sg-line"></span></div>
+          <span class="skill-pill" data-cat="ops">24/7 On-Call Support (L2/L3)</span>
+          <span class="skill-pill" data-cat="ops">Root Cause Analysis</span>
+          <span class="skill-pill" data-cat="ops">Runbook Documentation</span>
+          <span class="skill-pill" data-cat="ops">System Health Monitoring</span>
+
+          <div class="skill-group-head" data-group="qa"><span class="sg-dot" style="background:var(--violet);"></span>qa / testing<span class="sg-line"></span></div>
           <span class="skill-pill" data-cat="qa">Robot Framework</span>
           <span class="skill-pill" data-cat="qa">Functional Testing</span>
           <span class="skill-pill" data-cat="qa">Performance Testing</span>
@@ -879,12 +939,14 @@ A small interactive terminal built into this portfolio.
 Type <span class="term-hl">help</span> to see available commands,
 or just explore, most things here actually do something.`,
 
-  skills: ()=>`Cloud / Identity : Entra ID, Azure AD, M365, SSO
-Security        : Microsoft Defender, Microsoft Sentinel, Burp Suite, Nmap, Metasploit, Kali, Aircrack-ng
+  skills: ()=>`Cloud / Identity : Entra ID, Azure AD, M365, Windows Server, AWS (self-directed), SSO
+Security        : Microsoft Defender, Microsoft Sentinel, Burp Suite, Nmap, Metasploit, Kali, Aircrack-ng, Vulnerability Management
 Incident Resp   : CyberChef, ARIN, urlscan.io, VirusTotal, PhishTool, dmarcian, MITRE ATT&CK
 Endpoint / MDM  : Mosyle, Munki, AutoPkg, Santa, osquery
 Dev             : Python, FastAPI, Flask, PL/SQL, Java, Oracle APEX
-Infra           : Docker, Kubernetes, GitHub Actions, CI/CD
+Infra           : Docker, Kubernetes, GitHub Actions, CI/CD, Ansible, PowerShell, Bash
+Networking      : VLANs, DNS, DHCP, Firewall Rules, Wireshark, Nmap
+Operations      : On-Call (L2/L3), Root Cause Analysis, Runbooks, Health Monitoring
 Data / ML       : TinyML, LangChain, FAISS, Tableau
 QA / Testing    : Robot Framework, API, Functional, Regression`,
 
@@ -1010,6 +1072,20 @@ document.getElementById('terminal').addEventListener('click', ()=> termInput.foc
 // skill filter matrix
 const filterPills = document.querySelectorAll('.filter-pill');
 const skillPills = document.querySelectorAll('.skill-pill');
+const groupHeads = document.querySelectorAll('.skill-group-head');
+
+// populate total count and per-filter counts
+document.getElementById('skillsTotalNum').textContent = skillPills.length;
+filterPills.forEach(btn=>{
+  const f = btn.dataset.filter;
+  if(f === 'all') return;
+  const n = document.querySelectorAll('.skill-pill[data-cat="'+f+'"]').length;
+  const span = document.createElement('span');
+  span.className = 'fp-count';
+  span.textContent = '('+n+')';
+  btn.appendChild(span);
+});
+
 filterPills.forEach(btn=>{
   btn.addEventListener('click', ()=>{
     filterPills.forEach(b=>b.classList.remove('active'));
@@ -1019,6 +1095,9 @@ filterPills.forEach(btn=>{
       if(f === 'all'){ s.classList.remove('dim'); s.classList.remove('hl'); }
       else if(s.dataset.cat === f){ s.classList.remove('dim'); s.classList.add('hl'); }
       else { s.classList.add('dim'); s.classList.remove('hl'); }
+    });
+    groupHeads.forEach(g=>{
+      g.style.display = (f === 'all' || g.dataset.group === f) ? '' : 'none';
     });
   });
 });
